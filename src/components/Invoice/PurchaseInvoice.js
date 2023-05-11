@@ -72,8 +72,8 @@ const PrintToPdf = forwardRef(({ data }, ref) => {
         <div className="box7">
           <table className="table1">
             <thead>
-              <th>Sl</th>
-              <th>Product Description</th>
+              <th>S.No</th>
+              <th>Variety</th>
               <th>Quantity</th>
               <th>Unit Price</th>
               <th>Total Price</th>

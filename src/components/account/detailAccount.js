@@ -72,7 +72,7 @@ const DetailAccount = () => {
 
 								{data && (
 									<tr className='text-center'>
-										<td colspan='2' class='table-active '>
+										<td colspan='2' className='table-active '>
 											<strong>Balance</strong>
 										</td>
 										<td>

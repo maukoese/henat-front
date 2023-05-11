@@ -85,7 +85,7 @@ const CustomTable = ({ role }) => {
 
   return (
     <div className="card-body mb-3 ">
-      <div class="table-responsive">
+      <div className="table-responsive">
         <h4 className="text-center mb-2"> Permissions</h4>
 
         {keys && keys.length > 0 && (
@@ -113,7 +113,7 @@ const CustomTable = ({ role }) => {
           dataSource={role}
           rowKey={(record) => record.id}
         />
-        {/* <table class='table '>
+        {/* <table className='table '>
 					<thead className='thead-dark'>
 						<tr>
 							<th scope='col'>#ID</th>

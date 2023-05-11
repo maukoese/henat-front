@@ -34,7 +34,7 @@ const Sidenav = ({ color, sideNavOpenKeys }) => {
 		},
 
 		{
-			label: "PRODUCT",
+			label: "PRODUCTS",
 			key: "product",
 			icon: <CodeSandboxOutlined />,
 			children: [
@@ -50,7 +50,7 @@ const Sidenav = ({ color, sideNavOpenKeys }) => {
 				{
 					label: (
 						<NavLink to='/product-category'>
-							<span>Product Category</span>
+							<span>Product Categories</span>
 						</NavLink>
 					),
 					key: "productCategory",
@@ -59,7 +59,7 @@ const Sidenav = ({ color, sideNavOpenKeys }) => {
 				{
 					label: (
 						<NavLink to='/product-subcategory'>
-							<span>Product Subcategory</span>
+							<span>Product Subcategories</span>
 						</NavLink>
 					),
 					key: "productSubcategory",

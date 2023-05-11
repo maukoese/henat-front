@@ -10,7 +10,7 @@ const SaleProductListCard = ({ list }) => {
       key: "id",
     },
     {
-      title: "Name",
+      title: "Variety",
       dataIndex: "product",
       key: "product.name",
       render: (product) => (
@@ -18,7 +18,12 @@ const SaleProductListCard = ({ list }) => {
       ),
     },
     {
-      title: "Product Quantity",
+      title: "Length",
+      dataIndex: "length",
+      key: "length",
+    },
+    {
+      title: "Stem Count",
       dataIndex: "product_quantity",
       key: "product_quantity",
     },

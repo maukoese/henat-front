@@ -75,7 +75,7 @@ export default function Products({
                   <Form.Item {...restField} name={[name, "product_quantity"]}>
                     <InputNumber
                       style={{ width: "100%" }}
-                      placeholder="Product Quantity"
+                      placeholder="Stem Count"
                       onChange={(qty) => handleSelectedProdsQty(key, qty)}
                       value={
                         selectedProds[key] ? selectedProds[key].selectedQty : ""

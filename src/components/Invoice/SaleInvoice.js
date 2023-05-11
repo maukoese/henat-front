@@ -70,9 +70,12 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 				<div className='box7'>
 					<table className='table1'>
 						<thead>
-							<th>Sl</th>
-							<th>Product Description</th>
-							<th>Quantity</th>
+							<th>S.No</th>
+							<th>Variety</th>
+							<th>Length</th>
+							<th>Pack Rate</th>
+							<th>Box Number</th>
+							<th>Stem Count</th>
 							<th>Unit Price</th>
 							<th>Total Price</th>
 						</thead>
@@ -84,6 +87,9 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 										<td>
 											<p>{d.product.name}</p>
 										</td>
+										<td>{d['length']}cm</td>
+										<td>{d.pack_rate}</td>
+										<td>{d.boxes}</td>
 										<td>{d.product_quantity}</td>
 										<td>{d.product_sale_price}</td>
 										<td>{d.product_quantity * d.product_sale_price}</td>

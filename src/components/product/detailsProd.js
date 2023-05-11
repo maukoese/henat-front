@@ -98,6 +98,10 @@ const DetailsProd = () => {
 											<Typography.Text strong>Quantity :</Typography.Text>{" "}
 											{product.quantity}
 										</p>
+										<p>
+											<Typography.Text strong>Pack rate :</Typography.Text>{" "}
+											{product.pack_rate}
+										</p>
 
 										<p>
 											<Typography.Text strong>Purchase Price :</Typography.Text>{" "}
@@ -111,6 +115,10 @@ const DetailsProd = () => {
 										<p>
 											<Typography.Text strong>Unit Type :</Typography.Text>{" "}
 											{product.unit_type}
+										</p>
+										<p>
+											<Typography.Text strong>Length :</Typography.Text>{" "}
+											{product.unit_measurement}{product.unit_type}
 										</p>
 									</div>
 								</Col>

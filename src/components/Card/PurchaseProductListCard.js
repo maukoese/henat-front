@@ -18,7 +18,12 @@ const PurchaseProductListCard = ({ list }) => {
       ),
     },
     {
-      title: "Product Quantity",
+      title: "Length",
+      dataIndex: "length",
+      key: "length",
+    },
+    {
+      title: "Stem Count",
       dataIndex: "product_quantity",
       key: "product_quantity",
     },

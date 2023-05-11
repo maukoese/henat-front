@@ -26,14 +26,14 @@ const PrintToPdf = forwardRef(
 						<p>Email: {settingData?.email}</p>
 						<p>Website: {settingData?.website}</p>
 					</div>
-					<div class='box4'>
-						<hr class='hr1' />
-						<h3 class='center'>SALES REPORT</h3>
-						<hr class='hr1' />
+					<div className='box4'>
+						<hr className='hr1' />
+						<h3 className='center'>SALES REPORT</h3>
+						<hr className='hr1' />
 					</div>
 
-					<div class='box5'>
-						<table class='table2'>
+					<div className='box5'>
+						<table className='table2'>
 							<tr>
 								<th>Type</th>
 								<td>All</td>
@@ -45,8 +45,8 @@ const PrintToPdf = forwardRef(
 						</table>
 					</div>
 
-					<div class='box6'>
-						<table class='table2'>
+					<div className='box6'>
+						<table className='table2'>
 							<tr>
 								<th>From Date</th>
 								<td>{date?.startdate}</td>
@@ -58,8 +58,8 @@ const PrintToPdf = forwardRef(
 						</table>
 					</div>
 
-					<div class='box7'>
-						<table class='table1'>
+					<div className='box7'>
+						<table className='table1'>
 							<thead>
 								<th>Date</th>
 								<th>Invoice</th>
@@ -138,7 +138,7 @@ const PrintToPdf = forwardRef(
 							</tbody>
 						</table>
 					</div>
-					<div class='box12'>
+					<div className='box12'>
 						<hr />
 						<p>Powered by OMEGA SOLUTION | Contact: 01885 996601</p>
 					</div>

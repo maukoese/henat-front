@@ -10,12 +10,12 @@ const CustomTable = ({ list }) => {
 			render: (product) => product?.name,
 		},
 		{
-			title: "Product Quantity",
+			title: "Stem Count",
 			dataIndex: "product_quantity",
 			key: "product_quantity",
 		},
 		{
-			title: "Product Unit Price ",
+			title: "Unit Price ",
 			dataIndex: "product_purchase_price",
 			key: "product_purchase_price",
 		},

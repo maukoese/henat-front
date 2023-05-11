@@ -22,10 +22,12 @@ import UploadMany from "../Card/UploadMany";
 import styles from "./AddProd.module.css";
 
 const AddProd = () => {
-	const unitType = ["kg", "ltr", "pc"];
+	const unitType = ["cm", "kg", "ltr", "pc"];
 	const category = useSelector((state) => state.productCategories?.list);
 
-	const subCategory = useSelector((state) => state.productSubCategories?.list);
+	const subCategory = useSelector(
+		(state) => state.productSubCategories?.list
+	);
 
 	const brand = useSelector((state) => state.productBrands?.list);
 
@@ -46,9 +48,10 @@ const AddProd = () => {
 	const onFinish = async (values) => {
 		try {
 			let formData = new FormData();
-			formData.append("image", fileList[0].originFileObj);
+			formData.append("image", fileList[0]?.originFileObj);
 			formData.append("name", values.name);
 			formData.append("quantity", values.quantity);
+			formData.append("pack_rate", values.pack_rate);
 			formData.append("volume", values.volume);
 			formData.append("purchase_price", values.purchase_price);
 			formData.append("sale_price", values.sale_price);
@@ -94,21 +97,22 @@ const AddProd = () => {
 
 	return (
 		<Fragment>
-			<Row className='mr-top' justify='space-between' gutter={[0, 30]}>
+			<Row className="mr-top" justify="space-between" gutter={[0, 30]}>
 				<Col
 					xs={24}
 					sm={24}
 					md={24}
 					lg={11}
 					xl={11}
-					className='rounded column-design'>
+					className="rounded column-design"
+				>
 					<Card bordered={false}>
-						<Title level={4} className='m-2 text-center'>
+						<Title level={4} className="m-2 text-center">
 							Add Product
 						</Title>
 						<Form
 							form={form}
-							name='basic'
+							name="basic"
 							labelCol={{
 								span: 7,
 							}}
@@ -121,17 +125,19 @@ const AddProd = () => {
 							}}
 							onFinish={onFinish}
 							onFinishFailed={onFinishFailed}
-							autoComplete='off'>
+							autoComplete="off"
+						>
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Name'
-								name='name'
+								label="Name"
+								name="name"
 								rules={[
 									{
 										required: true,
 										message: "Please input Product name!",
 									},
-								]}>
+								]}
+							>
 								<Input />
 							</Form.Item>
 
@@ -172,31 +178,38 @@ const AddProd = () => {
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								name='product_sub_category_id'
-								label='Select Subcategory '
+								name="product_sub_category_id"
+								label="Select Subcategory "
 								rules={[
 									{
 										required: true,
 										message: "Please select sub-category!",
 									},
-								]}>
+								]}
+							>
 								<Select
-									name='product_sub_category_id'
+									name="product_sub_category_id"
 									loading={!subCategory}
 									showSearch
-									placeholder='Select Subcategory'
-									optionFilterProp='children'
+									placeholder="Select Subcategory"
+									optionFilterProp="children"
 									filterOption={(input, option) =>
 										option.children.includes(input)
 									}
 									filterSort={(optionA, optionB) =>
 										optionA.children
 											.toLowerCase()
-											.localeCompare(optionB.children.toLowerCase())
-									}>
+											.localeCompare(
+												optionB.children.toLowerCase()
+											)
+									}
+								>
 									{subCategory &&
 										subCategory.map((subcat) => (
-											<Select.Option key={subcat.id} value={subcat.id}>
+											<Select.Option
+												key={subcat.id}
+												value={subcat.id}
+											>
 												{subcat.name}
 											</Select.Option>
 										))}
@@ -205,33 +218,38 @@ const AddProd = () => {
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								name='product_brand_id'
-								label='Select Brand'
+								name="product_brand_id"
+								label="Select Brand"
 								rules={[
 									{
 										required: true,
 										message: "Please select brand!",
 									},
-								]}>
+								]}
+							>
 								<Select
-									name='product_brand_id'
+									name="product_brand_id"
 									loading={!brand}
 									showSearch
-									placeholder='Select Brand'
-									optionFilterProp='children'
+									placeholder="Select Brand"
+									optionFilterProp="children"
 									filterOption={(input, option) =>
 										option.children.includes(input)
 									}
 									filterSort={(optionA, optionB) =>
 										optionA.children
 											.toLowerCase()
-											.localeCompare(optionB.children.toLowerCase())
-									}>
+											.localeCompare(
+												optionB.children.toLowerCase()
+											)
+									}
+								>
 									{brand &&
 										brand.map((brandSingle) => (
 											<Select.Option
 												key={brandSingle.id}
-												value={brandSingle.id}>
+												value={brandSingle.id}
+											>
 												{brandSingle.name}
 											</Select.Option>
 										))}
@@ -240,31 +258,38 @@ const AddProd = () => {
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								name='unit_type'
-								label='Select Unit Type '
+								name="unit_type"
+								label="Select Unit Type "
 								rules={[
 									{
 										required: true,
 										message: "Please select unit type!",
 									},
-								]}>
+								]}
+							>
 								<Select
-									name='unit_type'
+									name="unit_type"
 									loading={!category}
 									showSearch
-									placeholder='Select Unit Type'
-									optionFilterProp='children'
+									placeholder="Select Unit Type"
+									optionFilterProp="children"
 									filterOption={(input, option) =>
 										option.children.includes(input)
 									}
 									filterSort={(optionA, optionB) =>
 										optionA.children
 											.toLowerCase()
-											.localeCompare(optionB.children.toLowerCase())
-									}>
+											.localeCompare(
+												optionB.children.toLowerCase()
+											)
+									}
+								>
 									{unitType &&
 										unitType.map((unit) => (
-											<Select.Option key={unit} value={unit}>
+											<Select.Option
+												key={unit}
+												value={unit}
+											>
 												{unit}
 											</Select.Option>
 										))}
@@ -273,83 +298,109 @@ const AddProd = () => {
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Unit Measurement'
-								name='unit_measurement'
+								label="Unit Measurement"
+								name="unit_measurement"
 								rules={[
 									{
 										required: true,
-										message: "Please input Unit Messurement!",
+										message:
+											"Please input Unit Messurement!",
 									},
-								]}>
-								<Input type='number' />
+								]}
+							>
+								<Input type="number" />
 							</Form.Item>
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Quantity'
-								name='quantity'
+								label="Quantity"
+								name="quantity"
 								rules={[
 									{
 										required: true,
 										message: "Please input Quantity!",
 									},
-								]}>
-								<Input type='number' />
+								]}
+							>
+								<Input type="number" />
 							</Form.Item>
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Purchase Price'
-								name='purchase_price'
+								label="Pack Rate"
+								name="pack_rate"
+								rules={[
+									{
+										required: true,
+										message: "Please input pack rate!",
+									},
+								]}
+							>
+								<Input type="number" />
+							</Form.Item>
+
+							<Form.Item
+								style={{ marginBottom: "15px" }}
+								label="Purchase Price"
+								name="purchase_price"
 								rules={[
 									{
 										required: true,
 										message: "Please input Purchase Price!",
 									},
-								]}>
-								<Input type='number' />
+								]}
+							>
+								<Input type="number" />
 							</Form.Item>
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Sale Price'
-								name='sale_price'
+								label="Sale Price"
+								name="sale_price"
 								rules={[
 									{
 										required: true,
 										message: "Please input Sale Price!",
 									},
-								]}>
-								<Input type='number' />
+								]}
+							>
+								<Input type="number" />
 							</Form.Item>
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='Reorder Quantity'
-								name='reorder_quantity'
+								label="Reorder Quantity"
+								name="reorder_quantity"
 								rules={[
 									{
 										required: true,
-										message: "Please input  Reorder Quantity!",
+										message:
+											"Please input  Reorder Quantity!",
 									},
-								]}>
-								<Input type='number' />
+								]}
+							>
+								<Input type="number" />
 							</Form.Item>
 
-							<Form.Item label='Upload Image' valuePropName='image'>
+							<Form.Item
+								label="Upload Image"
+								valuePropName="image"
+							>
 								<Upload
-									listType='picture-card'
+									listType="picture-card"
 									beforeUpload={() => false}
-									name='image'
+									name="image"
 									fileList={fileList}
 									maxCount={1}
-									onChange={handelChange}>
+									onChange={handelChange}
+								>
 									<div>
 										<PlusOutlined />
 										<div
 											style={{
 												marginTop: 8,
-											}}>
+											}}
+										>
 											Upload
 										</div>
 									</div>
@@ -358,35 +409,45 @@ const AddProd = () => {
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								label='SKU No'
-								name='sku'
+								label="SKU No"
+								name="sku"
 								rules={[
 									{
 										required: true,
 										message: "Please input SKU!",
 									},
-								]}>
+								]}
+							>
 								<Input />
 							</Form.Item>
 
 							<Form.Item
 								style={{ marginBottom: "15px" }}
-								className={styles.addProductBtnContainer}>
+								className={styles.addProductBtnContainer}
+							>
 								<Button
-									type='primary'
-									htmlType='submit'
-									shape='round'
+									type="primary"
+									htmlType="submit"
+									shape="round"
 									loading={loader}
-									onClick={onClickLoading}>
+									onClick={onClickLoading}
+								>
 									Add Product
 								</Button>
 							</Form.Item>
 						</Form>
 					</Card>
 				</Col>
-				<Col xs={24} sm={24} md={24} lg={11} xl={11} className=' rounded'>
+				<Col
+					xs={24}
+					sm={24}
+					md={24}
+					lg={11}
+					xl={11}
+					className=" rounded"
+				>
 					<Card className={`${styles.importCsvCard} column-design`}>
-						<Title level={4} className='m-2 text-center'>
+						<Title level={4} className="m-2 text-center">
 							Import From CSV
 						</Title>
 						<UploadMany urlPath={"product"} />

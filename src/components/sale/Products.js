@@ -25,24 +25,27 @@ export default function Products({
 		<>
 			<Row gutter={[16]}>
 				<Col span={2}>
-					<div className='font-weight-bold border-b'>SL</div>
+					<div className='font-weight-bold border-b'>S.No</div>
 				</Col>
 				<Col span={5}>
-					<div className='font-weight-bold border-b'>Product</div>
+					<div className='font-weight-bold border-b'>Variety</div>
+				</Col>
+				<Col span={2}>
+					<div className='font-weight-bold'>Length</div>
 				</Col>
 				<Col span={3}>
-					<div className='font-weight-bold'>U.M</div>
+					<div className='font-weight-bold'>Pack Rate</div>
 				</Col>
-				<Col span={4}>
-					<div className='font-weight-bold'>Quantity</div>
+				<Col span={3}>
+					<div className='font-weight-bold'>Box No</div>
 				</Col>
 				<Col span={4}>
 					<div className='font-weight-bold'>Unit Price</div>
 				</Col>
-				<Col span={3}>
-					<div className='font-weight-bold'>Total</div>
+				<Col span={4}>
+					<div className='font-weight-bold'>Stem Count</div>
 				</Col>
-				<Col span={3}>
+				<Col span={2}>
 					<div></div>
 				</Col>
 			</Row>
@@ -76,32 +79,49 @@ export default function Products({
 										</Select>
 									</Form.Item>
 								</Col>
-								<Col span={3}>
+								<Col span={2}>
 									<div className='font-weight-bold'>
 										{selectedProds[key] && selectedProds[key].unit_measurement
 											? selectedProds[key].unit_measurement
 											: 0}
+										{selectedProds[key] && selectedProds[key].unit_type
+											? selectedProds[key].unit_type
+											: 'cm'}
 									</div>
 								</Col>
-								<Col span={4}>
+								<Col span={3}>
 									<Form.Item {...restField} name={[name, "product_quantity"]}>
 										<InputNumber
 											style={{ width: "100%" }}
-											placeholder='Product Quantity'
-											onChange={(qty) => handleSelectedProdsQty(key, qty)}
+											placeholder='Pack Rate'
+											onChange={(qty) => handleSelectedProdsQty(key, qty, selectedProds[key] ? selectedProds[key].boxes : 1)}
 											value={
-												selectedProds[key] ? selectedProds[key].selectedQty : ""
+												selectedProds[key] ? selectedProds[key].pack_rate : 1
 											}
 										/>
 										<p style={{ display: "none" }}>
-											{selectedProds[key] ? selectedProds[key].selectedQty : ""}
+											{selectedProds[key] ? selectedProds[key].selectedQty : 1}
 										</p>
 									</Form.Item>
 								</Col>
-								<Col span={4}>
-									<Form.Item {...restField} name={[name, "product_sale_price"]}>
+								<Col span={3}>
+									<Form.Item {...restField} name={[name, "box_no"]}>
 										<InputNumber
 											style={{ width: "100%" }}
+											placeholder='Boxes'
+											onChange={(boxNo) => handleSelectedProdsQty(key, selectedProds[key] ? selectedProds[key].selectedQty : 1, boxNo)}
+											value={
+												selectedProds[key] ? (selectedProds[key].boxes ?? 1) : 1
+											}
+										/>
+										<p style={{ display: "none" }}>
+											{selectedProds[key] ? selectedProds[key].boxes : 1}
+										</p>
+									</Form.Item>
+								</Col>
+								<Col span={3}>
+									<Form.Item {...restField} name={[name, "product_sale_price"]}>
+										<InputNumber
 											placeholder='Purchase price'
 											onChange={(salePrice) =>
 												handleSelectedProdsSalePrice(key, salePrice)
@@ -115,14 +135,14 @@ export default function Products({
 										</p>
 									</Form.Item>
 								</Col>
-								<Col span={3}>
-									<div className='font-weight-bold'>
+								<Col span={4}>
+									<div className='font-weight-bold text-center'>
 										{selectedProds[key] &&
 											selectedProds[key].selectedQty *
-												selectedProds[key].sale_price}
+												selectedProds[key].boxes}
 									</div>
 								</Col>
-								<Col span={3}>
+								<Col span={2}>
 									<Form.Item>
 										<Button
 											shape='circle'
@@ -150,22 +170,3 @@ export default function Products({
 		</>
 	);
 }
-
-// {
-//   "total_amount": 10,
-//   "due_amount": 1,
-//   "paid_amount": 11,
-//   "supplier_id":1,
-//   "purchaseInvoiceProduct": [
-//       {
-//           "product_id": 1,
-//           "product_quantity": 1,
-//           "product_purchase_price": 500
-//       },
-//       {
-//           "product_id": 2,
-//           "product_quantity": 10,
-//           "product_purchase_price": 800
-//       }
-//   ]
-// }

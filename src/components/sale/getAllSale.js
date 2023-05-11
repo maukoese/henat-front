@@ -37,7 +37,7 @@ function CustomTable({ list, total, startdate, enddate, count, user }) {
       title: "Invoice No",
       dataIndex: "id",
       key: "id",
-      render: (name, { id }) => <Link to={`/sale/${id}`}>{id}</Link>,
+      render: (name, { id }) => <Link to={`/sale/${id}`}>#{id}</Link>,
     },
     {
       title: "Date",

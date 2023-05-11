@@ -10,7 +10,7 @@ const SaleProductListCard = ({ list, updateReturn, returnOnChange }) => {
       key: "product_id",
     },
     {
-      title: "Name",
+      title: "Variety",
       dataIndex: "product",
       key: "product.name",
       render: (product) => (
@@ -18,7 +18,22 @@ const SaleProductListCard = ({ list, updateReturn, returnOnChange }) => {
       ),
     },
     {
-      title: "Product Quantity",
+      title: "Pack Rate",
+      dataIndex: "pack_rate",
+      key: "pack_rate",
+    },
+    {
+      title: "Length",
+      dataIndex: "length",
+      key: "length",
+    },
+    {
+      title: "Box No",
+      dataIndex: "boxes",
+      key: "boxes",
+    },
+    {
+      title: "Stem Count",
       dataIndex: "product_quantity",
       key: "product_quantity",
     },

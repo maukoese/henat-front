@@ -28,7 +28,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#009EFF" }}
-							class='bi bi-box-fill quick-links-icon'></i>
+							className='bi bi-box-fill quick-links-icon'></i>
 					}
 				/>
 				<QuickLinksContainer
@@ -38,7 +38,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#25316D" }}
-							class='bi bi-bag-fill quick-links-icon'></i>
+							className='bi bi-bag-fill quick-links-icon'></i>
 					}
 				/>
 				<QuickLinksContainer
@@ -48,7 +48,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#FD841F" }}
-							class='bi bi-receipt quick-links-icon'></i>
+							className='bi bi-receipt quick-links-icon'></i>
 					}
 				/>
 				<QuickLinksContainer
@@ -58,7 +58,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#3E6D9C" }}
-							class='bi bi-wallet-fill quick-links-icon'></i>
+							className='bi bi-wallet-fill quick-links-icon'></i>
 					}
 				/>
 				<QuickLinksContainer
@@ -68,7 +68,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#8CB8ED" }}
-							class='bi bi-flag-fill quick-links-icon'></i>
+							className='bi bi-flag-fill quick-links-icon'></i>
 					}
 				/>
 				<QuickLinksContainer
@@ -78,7 +78,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#E14D2A" }}
-							class='bi bi-person-circle quick-links-icon'></i>
+							className='bi bi-person-circle quick-links-icon'></i>
 					}
 				/>
 
@@ -89,7 +89,7 @@ export default function QuickLinks({ sideNavOpenKeysHandler }) {
 					icon={
 						<i
 							style={{ color: "#3F3B6C" }}
-							class='bi bi-gear-fill quick-links-icon'></i>
+							className='bi bi-gear-fill quick-links-icon'></i>
 					}
 				/>
 			</div>

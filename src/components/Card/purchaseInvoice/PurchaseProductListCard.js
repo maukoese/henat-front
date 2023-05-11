@@ -18,12 +18,12 @@ const PurchaseProductListCard = ({ list, updateReturn, returnOnChange }) => {
       ),
     },
     {
-      title: "Product Quantity",
+      title: "Stem Count",
       dataIndex: "product_quantity",
       key: "product_quantity",
     },
     {
-      title: "Product Unit Price",
+      title: "Unit Price",
       dataIndex: "product_purchase_price",
       key: "product_purchase_price",
     },

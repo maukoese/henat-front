@@ -73,7 +73,10 @@ const AddSale = () => {
 		const saleInvoiceProduct = selectedProds.map((prod) => {
 			return {
 				product_id: prod.id,
-				product_quantity: prod.selectedQty,
+				product_quantity: prod.selectedQty * prod.boxes,
+				boxes: prod.boxes,
+				pack_rate: prod.pack_rate,
+				measure: prod.unit_measurement,
 				product_sale_price: prod.sale_price,
 			};
 		});
@@ -130,7 +133,7 @@ const AddSale = () => {
 		if (data.discount) {
 			setAfterDiscount(total - (data.discount ?? 0));
 		}
-		if (data.discount == 0) {
+		if (data.discount === 0) {
 			setAfterDiscount(0);
 		}
 	};
@@ -151,22 +154,21 @@ const AddSale = () => {
 		// if (foundProd === undefined) {
 		let updatedSelectedProds = [...selectedProds];
 		if (selectedProds[key]) {
-			updatedSelectedProds[key] = { ...foundProd, selectedQty: 1 };
+			updatedSelectedProds[key] = { ...foundProd, selectedQty: 1, boxes: 1 };
 			setSelectedProds(updatedSelectedProds);
 		} else {
-			setSelectedProds((prev) => [...prev, { ...foundProd, selectedQty: 1 }]);
+			setSelectedProds((prev) => [...prev, { ...foundProd, selectedQty: foundProd.pack_rate, boxes: 1 }]);
 		}
 
 		// }
 	};
 
-	const handleSelectedProdsQty = (key, qty) => {
+	const handleSelectedProdsQty = (key, selectedQty, boxes = 1) => {
 		const updatedSelectedProds = selectedProds.map((prod, index) => {
 			let prodCopy;
 			if (key === index) {
-				prodCopy = { ...prod, selectedQty: qty };
+				prodCopy = { ...prod, selectedQty, boxes };
 			} else prodCopy = { ...prod };
-
 			return prodCopy;
 		});
 
@@ -222,7 +224,7 @@ const AddSale = () => {
 			let due = 0;
 
 			selectedProds.forEach((prod) => {
-				total += prod.sale_price * prod.selectedQty;
+				total += prod.sale_price * prod.selectedQty * prod.boxes;
 			});
 
 			if (totalDiscountPaidDue.discount > 0) {
