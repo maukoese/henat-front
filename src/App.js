@@ -25,6 +25,7 @@ import UpdateCust from "./components/customer/updateCust";
 
 import Sale from "./components/sale/sale";
 import DetailSale from "./components/sale/detailSale";
+import DetailSaleP from "./components/sale/detailSaleP";
 
 import Page404 from "./components/404/404Page";
 import Dashboard from "./components/Dashboard/Graph/Dashboard";
@@ -38,7 +39,7 @@ import DetailStaff from "./components/user/detailsStaff";
 import UpdateStaff from "./components/user/updateStaff";
 
 // import Register from "./components/user/Register";
-import { Layout } from "antd";
+import { Layout, ConfigProvider } from "antd";
 import Account from "./components/account/account";
 import BalanceSheet from "./components/account/balanceSheet";
 import DetailAccount from "./components/account/detailAccount";
@@ -68,129 +69,250 @@ const { Sider } = Layout;
 
 function App() {
 	return (
-		<div className='App container-fluid'>
-			<BrowserRouter>
-				<Main>
-					<ToastContainer />
-					<Routes>
-						<Route path='/dashboard' element={<Dashboard />}></Route>
-						<Route path='/' element={<Dashboard />} />
-						<Route path='*' element={<Page404 />} />
+		<ConfigProvider
+			theme={{
+				token: {
+					colorPrimary: "#7D2E2F",
+				},
+			}}
+		>
+			<div className="App container-fluid">
+				<BrowserRouter>
+					<Main>
+						<ToastContainer />
+						<Routes>
+							<Route
+								path="/dashboard"
+								element={<Dashboard />}
+							></Route>
+							<Route path="/" element={<Dashboard />} />
+							<Route path="*" element={<Page404 />} />
 
-						<Route path='/supplier' exact element={<Suppliers />} />
-						<Route path='/supplier/:id' element={<DetailsSup />} />
-						<Route path='/supplier/:id/update' element={<UpdateSup />} />
+							<Route
+								path="/supplier"
+								exact
+								element={<Suppliers />}
+							/>
+							<Route
+								path="/supplier/:id"
+								element={<DetailsSup />}
+							/>
+							<Route
+								path="/supplier/:id/update"
+								element={<UpdateSup />}
+							/>
 
-						<Route path='/product' exact element={<Product />} />
-						<Route path='/product/:id' element={<DetailsProd />} />
-						<Route path='/product/:id/update' element={<UpdateProd />} />
+							<Route
+								path="/product"
+								exact
+								element={<Product />}
+							/>
+							<Route
+								path="/product/:id"
+								element={<DetailsProd />}
+							/>
+							<Route
+								path="/product/:id/update"
+								element={<UpdateProd />}
+							/>
 
-						<Route
-							path='/product-category'
-							exact
-							element={<ProductCategory />}
-						/>
-						<Route
-							path='/product-category/:id'
-							element={<DetailProductCategory />}
-						/>
-						<Route
-							path='/product-category/:id/update'
-							element={<UpdateProductCategory />}
-						/>
+							<Route
+								path="/product-category"
+								exact
+								element={<ProductCategory />}
+							/>
+							<Route
+								path="/product-category/:id"
+								element={<DetailProductCategory />}
+							/>
+							<Route
+								path="/product-category/:id/update"
+								element={<UpdateProductCategory />}
+							/>
 
-						<Route
-							path='/product-subcategory'
-							exact
-							element={<ProductSubcategory />}
-						/>
-						<Route
-							path='/product-subcategory/:id'
-							element={<DetailProductSubCategory />}
-						/>
+							<Route
+								path="/product-subcategory"
+								exact
+								element={<ProductSubcategory />}
+							/>
+							<Route
+								path="/product-subcategory/:id"
+								element={<DetailProductSubCategory />}
+							/>
 
-						<Route
-							path='/product-subcategory/:id/update'
-							element={<UpdateProductSubcategory />}
-						/>
+							<Route
+								path="/product-subcategory/:id/update"
+								element={<UpdateProductSubcategory />}
+							/>
 
-						<Route path='/product-brand' exact element={<ProductBrand />} />
-						<Route path='/product-brand/:id' element={<DetailProductBrand />} />
-						<Route
-							path='/product-brand/:id/update'
-							element={<UpdateProductBrand />}
-						/>
+							<Route
+								path="/product-brand"
+								exact
+								element={<ProductBrand />}
+							/>
+							<Route
+								path="/product-brand/:id"
+								element={<DetailProductBrand />}
+							/>
+							<Route
+								path="/product-brand/:id/update"
+								element={<UpdateProductBrand />}
+							/>
 
-						<Route path='/purchase' exact element={<Purchase />} />
-						<Route path='/purchaselist' exact element={<GetAllPurch />} />
-						<Route path='/purchase/:id' element={<DetailsPurch />} />
-						<Route
-							path='/purchase/return/:id'
-							element={<AddReturnPurchase />}
-						/>
+							<Route
+								path="/purchase"
+								exact
+								element={<Purchase />}
+							/>
+							<Route
+								path="/purchaselist"
+								exact
+								element={<GetAllPurch />}
+							/>
+							<Route
+								path="/purchase/:id"
+								element={<DetailsPurch />}
+							/>
+							<Route
+								path="/purchase/return/:id"
+								element={<AddReturnPurchase />}
+							/>
 
-						<Route path='/customer' exact element={<Customer />} />
-						<Route path='/customer/:id' element={<DetailCust />} />
-						<Route path='/customer/:id/update' element={<UpdateCust />} />
-						<Route path='/sale' exact element={<Sale />} />
-						<Route path='/salelist' exact element={<GetAllSale />} />
-						<Route path='/sale/:id' element={<DetailSale />} />
-						<Route path='/sale/:id/update' element={<UpdateProd />} />
-						<Route path='/sale/return/:id' element={<AddReturnSale />} />
-						<Route
-							path='/payment/supplier/:pid'
-							exact
-							element={<AddSupPaymentByInvoice />}
-						/>
-						<Route
-							path='/payment/customer/:pid'
-							exact
-							element={<AddCustPaymentByInvoice />}
-						/>
-						<Route path='/transaction' exact element={<Transaction />} />
-						<Route
-							path='/transaction/create'
-							exact
-							element={<AddTransaction />}
-						/>
-						<Route path='/transaction/:id' element={<DetailTransaction />} />
+							<Route
+								path="/customer"
+								exact
+								element={<Customer />}
+							/>
+							<Route
+								path="/customer/:id"
+								element={<DetailCust />}
+							/>
+							<Route
+								path="/customer/:id/update"
+								element={<UpdateCust />}
+							/>
+							<Route path="/sale" exact element={<Sale />} />
+							<Route
+								path="/salelist"
+								exact
+								element={<GetAllSale />}
+							/>
+							<Route path="/sale/preview/:id" element={<DetailSaleP />} />
+							<Route path="/sale/:id" element={<DetailSale />} />
+							<Route
+								path="/sale/:id/update"
+								element={<UpdateProd />}
+							/>
+							<Route
+								path="/sale/return/:id"
+								element={<AddReturnSale />}
+							/>
+							<Route
+								path="/payment/supplier/:pid"
+								exact
+								element={<AddSupPaymentByInvoice />}
+							/>
+							<Route
+								path="/payment/customer/:pid"
+								exact
+								element={<AddCustPaymentByInvoice />}
+							/>
+							<Route
+								path="/transaction"
+								exact
+								element={<Transaction />}
+							/>
+							<Route
+								path="/transaction/create"
+								exact
+								element={<AddTransaction />}
+							/>
+							<Route
+								path="/transaction/:id"
+								element={<DetailTransaction />}
+							/>
 
-						<Route path='/auth/login' exact element={<Login />} />
-						<Route path='/auth/logout' exact element={<Logout />} />
-						{/*         <Route path='/auth/register' exact element={<Register />} /> */}
-						<Route path='/hr/staffs' exact element={<UserList />} />
-						<Route path='/hr/staffs/:id' exact element={<DetailStaff />} />
-						<Route path='/hr/staffs/:id/update' element={<UpdateStaff />} />
+							<Route
+								path="/auth/login"
+								exact
+								element={<Login />}
+							/>
+							<Route
+								path="/auth/logout"
+								exact
+								element={<Logout />}
+							/>
+							{/*         <Route path='/auth/register' exact element={<Register />} /> */}
+							<Route
+								path="/hr/staffs"
+								exact
+								element={<UserList />}
+							/>
+							<Route
+								path="/hr/staffs/:id"
+								exact
+								element={<DetailStaff />}
+							/>
+							<Route
+								path="/hr/staffs/:id/update"
+								element={<UpdateStaff />}
+							/>
 
-						<Route path='/role' exact element={<RoleList />} />
-						<Route path='/role/:id' element={<DetailRole />} />
-						<Route path='/role/permit/:id/' element={<AddPermission />} />
+							<Route path="/role" exact element={<RoleList />} />
+							<Route path="/role/:id" element={<DetailRole />} />
+							<Route
+								path="/role/permit/:id/"
+								element={<AddPermission />}
+							/>
 
-						<Route path='/account' exact element={<Account />} />
-						<Route path='/account/:id' element={<DetailAccount />} />
-						<Route
-							path='/account/trial-balance'
-							exact
-							element={<TrialBalance />}
-						/>
-						<Route
-							path='/account/balance-sheet'
-							exact
-							element={<BalanceSheet />}
-						/>
-						<Route path='/account/income' exact element={<IncomeStatement />} />
-						<Route path='/designation' exact element={<Designation />} />
-						<Route path='/designation/:id' element={<DetailDesignation />} />
-						<Route
-							path='/designation/:id/update'
-							element={<UpdateDesignation />}
-						/>
+							<Route
+								path="/account"
+								exact
+								element={<Account />}
+							/>
+							<Route
+								path="/account/:id"
+								element={<DetailAccount />}
+							/>
+							<Route
+								path="/account/trial-balance"
+								exact
+								element={<TrialBalance />}
+							/>
+							<Route
+								path="/account/balance-sheet"
+								exact
+								element={<BalanceSheet />}
+							/>
+							<Route
+								path="/account/income"
+								exact
+								element={<IncomeStatement />}
+							/>
+							<Route
+								path="/designation"
+								exact
+								element={<Designation />}
+							/>
+							<Route
+								path="/designation/:id"
+								element={<DetailDesignation />}
+							/>
+							<Route
+								path="/designation/:id/update"
+								element={<UpdateDesignation />}
+							/>
 
-						<Route path='/invoice-setting' exact element={<InvoiceSetting />} />
-					</Routes>
-				</Main>
-			</BrowserRouter>
-		</div>
+							<Route
+								path="/invoice-setting"
+								exact
+								element={<InvoiceSetting />}
+							/>
+						</Routes>
+					</Main>
+				</BrowserRouter>
+			</div>
+		</ConfigProvider>
 	);
 }
 

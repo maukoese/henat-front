@@ -80,12 +80,7 @@ function Main({ children }) {
 						""
 					) : (
 						<div>
-							<h3 className='text-white ms-4 mt-2 mb-1 '>
-								Inventory{" "}
-								<strong style={{ color: "#97D2EC	", fontWeight: "bold" }}>
-									OS
-								</strong>
-							</h3>
+							<img src="/henat.png" width={100} className='ms-4 mb-1 ' alt="Logo" />
 						</div>
 					)}
 					{isLogged && (

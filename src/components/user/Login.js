@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../../redux/actions/user/loginUserAction";
 
 import { toast } from "react-toastify";
-import LoginTable from "../Card/LoginTable";
+// import LoginTable from "../Card/LoginTable";
 
 //TODO : redirect to home
 
@@ -36,7 +36,10 @@ const Login = () => {
       <Row className="card-row">
         <Col span={24}>
           <Card bordered={false} className={styles.card}>
-            <Title level={3} className="m-3 text-center">
+            <center>
+							<img src="/henat.png" width={100} className='text-center' alt="Logo" />
+            </center>
+            <Title level={3} className="m-1 text-center">
               Login
             </Title>
             <Form
@@ -90,13 +93,13 @@ const Login = () => {
                 </Button>
               </Form.Item>
 
-              <Form.Item className={styles.loginTableContainer}>
+              {/* <Form.Item className={styles.loginTableContainer}>
                 <Row>
                   <Col span={24}>
                     <LoginTable />
                   </Col>
                 </Row>
-              </Form.Item>
+              </Form.Item> */}
             </Form>
           </Card>
         </Col>

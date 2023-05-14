@@ -11,14 +11,7 @@ function Footer() {
 				<Col xs={24} md={24} lg={12} className={styles.copyrightCol}>
 					<p className={styles.copyrightText}>
 						{year}{" "}
-						<a
-							href='https://solution.omega.ac'
-							className='font-weight-bold'
-							target='_blank'
-							rel='noreferrer'>
-							Omega Solution
-						</a>{" "}
-						One stop solution.
+						All rights reserved
 					</p>
 				</Col>
 				<Col xs={24} md={24} lg={12}>
@@ -26,28 +19,20 @@ function Footer() {
 						<ul className={styles.footerList}>
 							<li className='nav-item'>
 								<a
-									href='https://omega.ac'
+									href='/'
 									className='nav-link text-muted'
 									target='/'>
-									Omega
+									Home
 								</a>
 							</li>
 							<li className='nav-item'>
-								<a href='/' className='nav-link text-muted' target='/'>
+								<a href='https://henatflowers.com/about-us/' className='nav-link text-muted' target='/'>
 									About Us
 								</a>
 							</li>
 							<li className='nav-item'>
-								<a href='/' className='nav-link text-muted' target='_blank'>
-									Blog
-								</a>
-							</li>
-							<li className='nav-item'>
-								<a
-									href='/'
-									className='nav-link pe-0 text-muted'
-									target='_blank'>
-									License
+								<a href='https://henatflowers.com/contact-us/' className='nav-link text-muted' target='_blank'>
+									Contact
 								</a>
 							</li>
 						</ul>

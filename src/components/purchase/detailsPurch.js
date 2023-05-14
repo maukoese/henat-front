@@ -99,7 +99,6 @@ const DetailsPurch = () => {
                     >
                       <Button
                         type="danger"
-                        DetailCust
                         shape="round"
                         icon={<DeleteOutlined />}
                       ></Button>

@@ -38,7 +38,7 @@ const SaleProductListCard = ({ list, updateReturn, returnOnChange }) => {
       key: "product_quantity",
     },
     {
-      title: "Product  Unit Price",
+      title: "Unit Price",
       dataIndex: "product_sale_price",
       key: "product_sale_price",
     },
@@ -108,7 +108,7 @@ const SaleProductListCard = ({ list, updateReturn, returnOnChange }) => {
               sale Product Information
             </h6>,
           ]}
-          bodyStyle={{ paddingTop: "0" }}
+          style={{ paddingTop: "0" }}
         >
           <div className="col-info">
             <Table

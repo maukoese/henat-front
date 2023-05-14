@@ -56,7 +56,7 @@ const UserListCard = ({ list }) => {
 							Staffs Information
 						</h5>,
 					]}
-					bodyStyle={{ padding: "0" }}>
+					style={{ padding: "0" }}>
 					<div className='col-info'>
 						<Table
 							scroll={{ x: true }}

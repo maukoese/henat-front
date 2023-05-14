@@ -72,7 +72,7 @@ function CustomerInvoiceList({ list, linkTo }) {
 						Customer Invoice Information
 					</h5>,
 				]}
-				bodyStyle={{ paddingTop: "0" }}>
+				style={{ paddingTop: "0" }}>
 				<Table
 					scroll={{ x: true }}
 					loading={!list}

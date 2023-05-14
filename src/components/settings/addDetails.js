@@ -37,6 +37,8 @@ const AddDetails = () => {
 
 	const [initValues, setInitValues] = useState(null);
 
+	const { TextArea } = Input;
+
 	const onFinish = async (values) => {
 		try {
 			const resp = await updateInvoice(values);
@@ -182,7 +184,7 @@ const AddDetails = () => {
 											message: "Please input Footer!",
 										},
 									]}>
-									<Input />
+									<TextArea rows={4} />
 								</Form.Item>
 
 								<Form.Item

@@ -1,5 +1,5 @@
 {
-  "name": "inventoryos",
+  "name": "@henat/pos",
   "version": "1.0.0",
   "private": true,
   "devDependencies": {
@@ -80,5 +80,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "theme": {
+    "primary-color": "#7D2E2F",
+    "link-color": "#1DA57A",
+    "border-radius-base": "2px"
   }
 }

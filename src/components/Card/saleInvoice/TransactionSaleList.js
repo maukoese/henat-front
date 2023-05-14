@@ -93,7 +93,7 @@ const TransactionSaleList = ({ list }) => {
               Transaction Information
             </h6>,
           ]}
-          bodyStyle={{ paddingTop: "0" }}
+          style={{ paddingTop: "0" }}
         >
           {list && (
             <div style={{ marginBottom: "30px" }}>

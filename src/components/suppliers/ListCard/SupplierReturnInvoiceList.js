@@ -50,7 +50,7 @@ const SupplierReturnInvoiceList = ({ list }) => {
 							All Return Information
 						</h6>,
 					]}
-					bodyStyle={{ paddingTop: "0" }}>
+					style={{ paddingTop: "0" }}>
 					<div className='col-info'>
 						<Table
 							scroll={{ x: true }}

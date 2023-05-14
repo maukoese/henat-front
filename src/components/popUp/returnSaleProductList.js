@@ -34,7 +34,7 @@ const CustomTable = ({ list }) => {
 				<Card
 					className='header-solid h-full'
 					bordered={false}
-					bodyStyle={{ paddingTop: "0" }}>
+					style={{ paddingTop: "0" }}>
 					<div className='col-info'>
 						<Table
 							loading={!list}

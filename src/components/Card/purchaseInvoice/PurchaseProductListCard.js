@@ -87,7 +87,7 @@ const PurchaseProductListCard = ({ list, updateReturn, returnOnChange }) => {
               Purchase Product Information
             </h6>,
           ]}
-          bodyStyle={{ paddingTop: "0" }}
+          style={{ paddingTop: "0" }}
         >
           <div className="col-info">
             <Table
