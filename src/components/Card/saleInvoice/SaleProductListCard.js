@@ -53,9 +53,9 @@ const SaleProductListCard = ({ list, updateReturn, returnOnChange }) => {
         return_quantity,
       }) => {
         if (return_quantity) {
-          return remain_quantity * product_sale_price;
+          return (remain_quantity * product_sale_price).toFixed(2);
         } else {
-          return product_sale_price * product_quantity;
+          return (product_sale_price * product_quantity).toFixed(2);
         }
       },
     },

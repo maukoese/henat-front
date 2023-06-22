@@ -41,11 +41,11 @@ const AddSale = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(loadAllCustomer({ page: 1, limit: 10 }));
+		dispatch(loadAllCustomer({ page: 1, limit: 100 }));
 	}, []);
 
 	useEffect(() => {
-		dispatch(loadProduct({ page: 1, limit: 10 }));
+		dispatch(loadProduct({ page: 1, limit: 200 }));
 	}, []);
 
 	const allCustomer = useSelector((state) => state.customers.list);
@@ -75,7 +75,7 @@ const AddSale = () => {
 				product_id: prod.id,
 				product_quantity: prod.selectedQty * prod.boxes,
 				boxes: prod.boxes,
-				pack_rate: prod.pack_rate,
+				pack_rate: prod.selectedQty,
 				measure: prod.unit_measurement,
 				product_sale_price: prod.sale_price,
 			};
@@ -121,8 +121,11 @@ const AddSale = () => {
 		const data = form.getFieldsValue();
 
 		const total = data.saleInvoiceProduct?.reduce((acc, p) => {
-			const { product_quantity = 0, product_sale_price = 0 } = p;
-			acc += product_quantity * product_sale_price;
+			if (p) {
+				const { product_quantity = 0, product_sale_price = 0 } = p;
+				acc += product_quantity * product_sale_price;
+			}
+
 			return acc;
 		}, 0);
 
@@ -153,22 +156,36 @@ const AddSale = () => {
 		const foundProd = allProducts.find((item) => item.id === prodId);
 		// if (foundProd === undefined) {
 		let updatedSelectedProds = [...selectedProds];
+
 		if (selectedProds[key]) {
-			updatedSelectedProds[key] = { ...foundProd, selectedQty: 1, boxes: 1 };
+			updatedSelectedProds[key] = {
+				...foundProd,
+				selectedQty: foundProd.selectedQty,
+				boxes: 1,
+			};
 			setSelectedProds(updatedSelectedProds);
 		} else {
-			setSelectedProds((prev) => [...prev, { ...foundProd, selectedQty: foundProd.pack_rate, boxes: 1 }]);
+			setSelectedProds((prev) => [
+				...prev,
+				{ ...foundProd, selectedQty: foundProd.pack_rate, boxes: 1 },
+			]);
 		}
 
 		// }
 	};
 
-	const handleSelectedProdsQty = (key, selectedQty, boxes = 1) => {
+	const handleSelectedProdsQty = (
+		key,
+		selectedQty,
+		unit_measurement,
+		boxes = 1
+	) => {
 		const updatedSelectedProds = selectedProds.map((prod, index) => {
 			let prodCopy;
 			if (key === index) {
-				prodCopy = { ...prod, selectedQty, boxes };
+				prodCopy = { ...prod, selectedQty, unit_measurement, boxes };
 			} else prodCopy = { ...prod };
+
 			return prodCopy;
 		});
 
@@ -189,7 +206,9 @@ const AddSale = () => {
 
 	const handleDeleteProd = (key) => {
 		if (selectedProds[key]) {
-			const updatedProds = selectedProds.filter((prod, index) => key !== index);
+			const updatedProds = selectedProds.filter(
+				(prod, index) => key !== index
+			);
 			setSelectedProds(updatedProds);
 		}
 	};
@@ -242,50 +261,59 @@ const AddSale = () => {
 				due,
 			}));
 		}
-	}, [selectedProds, totalDiscountPaidDue.paid, totalDiscountPaidDue.discount]);
+	}, [
+		selectedProds,
+		totalDiscountPaidDue.paid,
+		totalDiscountPaidDue.discount,
+	]);
 
 	return (
-		<Card className='mt-3'>
+		<Card className="mt-3">
 			<Form
 				form={form}
-				className='m-lg-4'
-				name='dynamic_form_nest_item'
+				className="m-lg-4"
+				name="dynamic_form_nest_item"
 				// onFinish={onFinish}
 				onChange={onChange}
 				onFinishFailed={() => {
 					setLoader(false);
 				}}
-				layout='vertical'
-				size='large'
-				autoComplete='off'>
-				<Row className='mr-top' gutter={[24, 24]}>
-					<Col span={24} className='border rounded column-design'>
-						<Title level={4} className='m-2 text-center'>
+				layout="vertical"
+				size="large"
+				autoComplete="off"
+			>
+				<Row className="mr-top" gutter={[24, 24]}>
+					<Col span={24} className="border rounded column-design">
+						<Title level={4} className="m-2 text-center">
 							Sale New Products
 						</Title>
 					</Col>
-					<Col span={24} lg={16}>
-						<div className='d-flex justify-content-between mb-1'>
+					<Col span={24} lg={24}>
+						<div className="d-flex justify-content-between mb-1">
 							<Form.Item
-								label='Customer '
-								name='customer_id'
+								label="Customer "
+								name="customer_id"
 								style={{ maxWidth: "250px" }}
 								rules={[
 									{
 										required: true,
 										message: "Please Select a Customer!",
 									},
-								]}>
+								]}
+							>
 								<Select
 									loading={!allCustomer}
 									showSearch
-									placeholder='Select a customer '
-									optionFilterProp='children'
+									placeholder="Select a customer "
+									optionFilterProp="children"
 									onChange={(id) => setCustomer(id)}
 									onSearch={onSearch}
 									filterOption={(input, option) =>
-										option.children.toLowerCase().includes(input.toLowerCase())
-									}>
+										option.children
+											.toLowerCase()
+											.includes(input.toLowerCase())
+									}
+								>
 									{allCustomer &&
 										allCustomer.map((sup) => (
 											<Option key={sup.id} value={sup.id}>
@@ -295,13 +323,13 @@ const AddSale = () => {
 								</Select>
 							</Form.Item>
 
-							<Form.Item label='Date' required>
+							<Form.Item label="Date" required>
 								<DatePicker
 									onChange={(value) => setDate(value._d)}
 									defaultValue={date}
 									style={{ marginBottom: "10px" }}
-									label='date'
-									name='date'
+									label="date"
+									name="date"
 									rules={[
 										{
 											required: true,
@@ -313,28 +341,36 @@ const AddSale = () => {
 
 							{/* Sales Person Input Field */}
 							<Form.Item
-								label='Sales Person '
-								name='sales_person_id'
+								label="Sales Person "
+								name="sales_person_id"
 								style={{ maxWidth: "250px" }}
 								rules={[
 									{
 										required: true,
-										message: "Please Select a sales person!",
+										message:
+											"Please Select a sales person!",
 									},
-								]}>
+								]}
+							>
 								<Select
 									loading={!allStaff}
 									showSearch
-									placeholder='Select sales person '
-									optionFilterProp='children'
+									placeholder="Select sales person "
+									optionFilterProp="children"
 									onChange={(id) => setSalesPerson(id)}
 									onSearch={onSearch}
 									filterOption={(input, option) =>
-										option.children.toLowerCase().includes(input.toLowerCase())
-									}>
+										option.children
+											.toLowerCase()
+											.includes(input.toLowerCase())
+									}
+								>
 									{allStaff &&
 										allStaff?.map((info) => (
-											<Option key={info.id} value={info.id}>
+											<Option
+												key={info.id}
+												value={info.id}
+											>
 												{info.username}
 											</Option>
 										))}
@@ -350,21 +386,60 @@ const AddSale = () => {
 							selectedProds={selectedProds}
 							handleSelectedProds={handleSelectedProds}
 							handleSelectedProdsQty={handleSelectedProdsQty}
-							handleSelectedProdsSalePrice={handleSelectedProdsSalePrice}
+							handleSelectedProdsSalePrice={
+								handleSelectedProdsSalePrice
+							}
 							handleDeleteProd={handleDeleteProd}
 						/>
 					</Col>
 
-					<Col span={24} lg={8}>
+					<Col span={24} lg={24}>
 						<div
 							style={{
 								padding: "10px 20px",
 								display: "flex",
 								justifyContent: "space-between",
 								border: "1px solid #ccc",
-							}}>
+							}}
+						>
 							<strong>Total: </strong>
-							<strong>{totalDiscountPaidDue.total} tk</strong>
+							<strong>
+								{totalDiscountPaidDue.total.toFixed(2)} USD
+							</strong>
+						</div>
+
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+							}}
+						>
+							<strong>Box number: </strong>
+							<strong>
+								{selectedProds &&
+									selectedProds.reduce(
+										(p, c) => p + c.boxes,
+										0
+									)}
+							</strong>
+						</div>
+
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+							}}
+						>
+							<strong>Stem count: </strong>
+							<strong>
+								{selectedProds &&
+									selectedProds.reduce(
+										(p, c) => p + c.selectedQty,
+										0
+									)}
+							</strong>
 						</div>
 
 						<div
@@ -373,17 +448,22 @@ const AddSale = () => {
 								display: "flex",
 								justifyContent: "space-between",
 								alignItems: "center",
-							}}>
+							}}
+						>
 							<strong>Discount: </strong>
 							<Form.Item
-								name='discount'
+								name="discount"
 								rules={[
 									{
 										required: true,
 										message: "Please input discount!",
 									},
-								]}>
-								<InputNumber type='number' onChange={handleDiscount} />
+								]}
+							>
+								<InputNumber
+									type="number"
+									onChange={handleDiscount}
+								/>
 							</Form.Item>
 						</div>
 
@@ -392,9 +472,13 @@ const AddSale = () => {
 								padding: "10px 20px",
 								display: "flex",
 								justifyContent: "space-between",
-							}}>
+							}}
+						>
 							<strong>After Discount: </strong>
-							<strong>{totalDiscountPaidDue.afterDiscount} tk</strong>
+							<strong>
+								{totalDiscountPaidDue.afterDiscount.toFixed(2)}{" "}
+								USD
+							</strong>
 						</div>
 
 						<div
@@ -403,17 +487,22 @@ const AddSale = () => {
 								display: "flex",
 								justifyContent: "space-between",
 								alignItems: "center",
-							}}>
+							}}
+						>
 							<strong>Paid Amount: </strong>
 							<Form.Item
-								name='paid_amount'
+								name="paid_amount"
 								rules={[
 									{
 										required: true,
 										message: "Please input Paid amount!",
 									},
-								]}>
-								<InputNumber type='number' onChange={handlePaid} />
+								]}
+							>
+								<InputNumber
+									type="number"
+									onChange={handlePaid}
+								/>
 							</Form.Item>
 						</div>
 						<div
@@ -422,22 +511,26 @@ const AddSale = () => {
 								display: "flex",
 								justifyContent: "space-between",
 								border: "1px solid #ccc",
-							}}>
+							}}
+						>
 							<strong>Due Amount: </strong>
-							<strong>{totalDiscountPaidDue.due} tk</strong>
+							<strong>
+								{totalDiscountPaidDue.due.toFixed(2)} USD
+							</strong>
 						</div>
 
 						<Form.Item style={{ marginTop: "15px" }}>
 							<Button
 								block
-								type='primary'
-								htmlType='submit'
+								type="primary"
+								htmlType="submit"
 								loading={loader}
 								onClick={() => {
 									onClickLoading();
 									onFormSubmit();
-								}}>
-								Sale Product
+								}}
+							>
+								Sell Product
 							</Button>
 						</Form.Item>
 					</Col>

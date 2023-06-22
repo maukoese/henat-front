@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Alert, Button, Card, Col, Form, Input, Row, Typography } from "antd";
+import { Alert, Button, Card, Col, Form, Input, Row, Typography, Switch } from "antd";
 import axios from "axios";
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -44,6 +44,7 @@ function UpdateProd() {
 		pack_rate: prod.pack_rate,
 		purchase_price: prod.purchase_price,
 		sale_price: prod.sale_price,
+		status: prod.status
 	});
 
 	const onFinish = (values) => {
@@ -187,6 +188,20 @@ function UpdateProd() {
 										]}
 									>
 										<Input type="number" />
+									</Form.Item>
+
+									<Form.Item
+										style={{ marginBottom: "10px" }}
+										label="Status"
+										name="status"
+										rules={[
+											{
+												type: Boolean,
+												message: "Please input status",
+											},
+										]}
+									>
+										<Switch defaultChecked />
 									</Form.Item>
 
 									<Form.Item

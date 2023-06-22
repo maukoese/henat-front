@@ -120,6 +120,10 @@ const DetailsProd = () => {
 											<Typography.Text strong>Length :</Typography.Text>{" "}
 											{product.unit_measurement}{product.unit_type}
 										</p>
+										<p>
+											<Typography.Text strong>Status :</Typography.Text>{" "}
+											{product.status ? 'Active' : 'Inactive'}
+										</p>
 									</div>
 								</Col>
 

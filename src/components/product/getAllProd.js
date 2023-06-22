@@ -18,17 +18,17 @@ function CustomTable({ list, total, status }) {
 	const [columnsToShow, setColumnsToShow] = useState([]);
 
 	const columns = [
-		{
-			title: "Image",
-			dataIndex: "thumbnail_image_url",
-			render: (thumbnail_image_url) => (
-				<img
-					style={{ maxWidth: "40px" }}
-					alt='product'
-					src={thumbnail_image_url}
-				/>
-			),
-		},
+		// {
+		// 	title: "Image",
+		// 	dataIndex: "thumbnail_image_url",
+		// 	render: (thumbnail_image_url) => (
+		// 		<img
+		// 			style={{ maxWidth: "40px" }}
+		// 			alt='product'
+		// 			src={thumbnail_image_url}
+		// 		/>
+		// 	),
+		// },
 		{
 			title: "ID",
 			dataIndex: "id",

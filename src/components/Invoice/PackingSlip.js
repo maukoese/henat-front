@@ -12,33 +12,26 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 	return (
 		<Fragment>
 			<div ref={ref} className="wrapper">
-				<div className="box2">
-					<h1>{invoiceData?.company_name}</h1>
-					<h3>{invoiceData?.tag_line}</h3>
+				<div className="box4">
+					<img
+						src="/henat.png"
+						width={150}
+						className="ms-4 mb-1 "
+						alt="Logo"
+					/>
+					<h4>{invoiceData?.company_name}</h4>
 					<p>{invoiceData?.address}</p>
-					<p>{invoiceData?.phone}</p>
-					<p>Email: {invoiceData?.email}</p>
-					<p>Website: {invoiceData?.website}</p>
-				</div>
-
-				<div className="box4">
-					<hr className="hr1" />
-					<h3 className="center">PACKING SLIP</h3>
-					<hr className="hr1" />
-				</div>
-
-				<div className="box4">
-					<hr className="hr1" />
-					<h3 className="center">PACKING SLIP</h3>
-					<hr className="hr1" />
+					<p>
+						{invoiceData?.email} . {invoiceData?.phone}
+					</p>
 				</div>
 
 				<div className="box5">
 					<table className="table2">
-						<tr>
+						{/* <tr>
 							<th>Client ID</th>
 							<td>{data?.customer_id}</td>
-						</tr>
+						</tr> */}
 						<tr>
 							<th>Client Name</th>
 							<td>{data?.customer.name}</td>
@@ -47,15 +40,20 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 							<th>Address</th>
 							<td>{data?.customer.address}</td>
 						</tr>
-						<tr>
+						{/* <tr>
 							<th>Contact No</th>
 							<td>{data?.customer.phone}</td>
-						</tr>
+						</tr> */}
 					</table>
 				</div>
 
 				<div className="box6">
 					<table className="table2">
+						<tr>
+							<th colSpan={2}>
+					<h3 className="center">PACKING SLIP</h3>
+							</th>
+						</tr>
 						<tr>
 							<th>Invoice No</th>
 							<td>{data?.id}</td>
@@ -105,7 +103,7 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 
 				<div className="box12">
 					<hr />
-					<p>Powered by ERP-OS | Contact: 01885 996601</p>
+					{invoiceData?.footer}
 				</div>
 			</div>
 		</Fragment>

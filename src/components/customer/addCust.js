@@ -51,6 +51,7 @@ const AddCust = () => {
 						<Title level={4} className='m-2 text-center'>
 							Add Customer
 						</Title>
+						
 						<Form
 							form={form}
 							name='basic'
@@ -80,12 +81,13 @@ const AddCust = () => {
 							</Form.Item>
 
 							<Form.Item
-								style={{ marginBottom: "10px" }}
+								style={{ marginBottom: "10px", visibility: 'none' }}
 								label='Phone'
 								name='phone'
+								value={ parseFloat(Math.random())}
 								rules={[
 									{
-										required: true,
+										required: false,
 										message: "Please input customer Phone!",
 									},
 								]}>

@@ -25,6 +25,7 @@ import UpdateCust from "./components/customer/updateCust";
 
 import Sale from "./components/sale/sale";
 import DetailSale from "./components/sale/detailSale";
+import EditDetailSale from "./components/sale/editSale";
 import DetailSaleP from "./components/sale/detailSaleP";
 
 import Page404 from "./components/404/404Page";
@@ -198,6 +199,7 @@ function App() {
 								element={<GetAllSale />}
 							/>
 							<Route path="/sale/preview/:id" element={<DetailSaleP />} />
+							<Route path="/sale/:id/edit" element={<EditDetailSale />} />
 							<Route path="/sale/:id" element={<DetailSale />} />
 							<Route
 								path="/sale/:id/update"

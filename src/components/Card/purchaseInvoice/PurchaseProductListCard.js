@@ -10,12 +10,27 @@ const PurchaseProductListCard = ({ list, updateReturn, returnOnChange }) => {
       key: "product_id",
     },
     {
-      title: "Name",
+      title: "Variety",
       dataIndex: "product",
       key: "product.name",
       render: (product) => (
         <Link to={`/product/${product.id}`}>{product.name}</Link>
       ),
+    },
+    {
+      title: "Pack Rate",
+      dataIndex: "pack_rate",
+      key: "pack_rate",
+    },
+    {
+      title: "Length",
+      dataIndex: "length",
+      key: "length",
+    },
+    {
+      title: "Box No",
+      dataIndex: "boxes",
+      key: "boxes",
     },
     {
       title: "Stem Count",

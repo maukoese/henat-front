@@ -25,25 +25,25 @@ export default function Products({
 		<>
 			<Row gutter={[16]}>
 				<Col span={2}>
-					<div className='font-weight-bold border-b'>S.No</div>
+					<div className="font-weight-bold border-b">S.No</div>
 				</Col>
 				<Col span={5}>
-					<div className='font-weight-bold border-b'>Variety</div>
+					<div className="font-weight-bold border-b">Variety</div>
 				</Col>
 				<Col span={2}>
-					<div className='font-weight-bold'>Length</div>
+					<div className="font-weight-bold">Length</div>
 				</Col>
 				<Col span={3}>
-					<div className='font-weight-bold'>Pack Rate</div>
+					<div className="font-weight-bold">Pack Rate</div>
 				</Col>
 				<Col span={3}>
-					<div className='font-weight-bold'>Box No</div>
+					<div className="font-weight-bold">Box No</div>
 				</Col>
 				<Col span={4}>
-					<div className='font-weight-bold'>Unit Price</div>
+					<div className="font-weight-bold">Unit Price</div>
 				</Col>
 				<Col span={4}>
-					<div className='font-weight-bold'>Stem Count</div>
+					<div className="font-weight-bold">Stem Count</div>
 				</Col>
 				<Col span={2}>
 					<div></div>
@@ -52,27 +52,38 @@ export default function Products({
 
 			<hr style={{ backgroundColor: "black" }} />
 
-			<Form.List name='saleInvoiceProduct'>
+			<Form.List name="saleInvoiceProduct">
 				{(fields, { add, remove }) => (
 					<>
 						{fields.map(({ key, name, ...restField }, index) => (
-							<Row className='mt-2' gutter={[16]} key={key}>
+							<Row className="mt-2" gutter={[16]} key={key}>
 								<Col span={2}>{index + 1}</Col>
 								<Col span={5}>
-									<Form.Item {...restField} name={[name, "product_id"]}>
+									<Form.Item
+										{...restField}
+										name={[name, "product_id"]}
+									>
 										<Select
-											placeholder='Select Product'
+											placeholder="Select Product"
 											showSearch
-											optionFilterProp='children'
+											optionFilterProp="children"
 											filterOption={(input, option) =>
 												option.children
 													.toLowerCase()
-													.includes(input.toLowerCase())
+													.includes(
+														input.toLowerCase()
+													)
 											}
-											onChange={(prodId) => handleSelectedProds(prodId, key)}>
+											onChange={(prodId) =>
+												handleSelectedProds(prodId, key)
+											}
+										>
 											{Array.isArray(allProducts) &&
 												allProducts.map((p) => (
-													<Select.Option key={p.id} value={p.id}>
+													<Select.Option
+														key={p.id}
+														value={p.id}
+													>
 														{p.name}
 													</Select.Option>
 												))}
@@ -80,63 +91,131 @@ export default function Products({
 									</Form.Item>
 								</Col>
 								<Col span={2}>
-									<div className='font-weight-bold'>
-										{selectedProds[key] && selectedProds[key].unit_measurement
-											? selectedProds[key].unit_measurement
-											: 0}
-										{selectedProds[key] && selectedProds[key].unit_type
-											? selectedProds[key].unit_type
-											: 'cm'}
-									</div>
+									<InputNumber
+										style={{ width: "100%" }}
+										placeholder="Length"
+										onChange={(m) =>
+											handleSelectedProdsQty(
+												key,
+												selectedProds[key]
+													? selectedProds[key]
+															.selectedQty
+													: 1,
+												m,
+												selectedProds[key]
+													? selectedProds[key].boxes
+													: 1
+											)
+										}
+										value={
+											selectedProds[key]
+												? selectedProds[key]
+														.unit_measurement
+												: 0
+										}
+									/>
 								</Col>
 								<Col span={3}>
-									<Form.Item {...restField} name={[name, "product_quantity"]}>
+									<Form.Item
+										{...restField}
+										name={[name, "product_quantity"]}
+									>
 										<InputNumber
 											style={{ width: "100%" }}
-											placeholder='Pack Rate'
-											onChange={(qty) => handleSelectedProdsQty(key, qty, selectedProds[key] ? selectedProds[key].boxes : 1)}
+											placeholder="Pack Rate"
+											onChange={(qty) =>
+												handleSelectedProdsQty(
+													key,
+													qty,
+													selectedProds[key]
+														? selectedProds[key]
+																.unit_measurement
+														: 1,
+													selectedProds[key]
+														? selectedProds[key]
+																.boxes
+														: 1
+												)
+											}
 											value={
-												selectedProds[key] ? selectedProds[key].pack_rate : 1
+												selectedProds[key]
+													? selectedProds[key]
+															.selectedQty
+													: 1
 											}
 										/>
 										<p style={{ display: "none" }}>
-											{selectedProds[key] ? selectedProds[key].selectedQty : 1}
+											{selectedProds[key]
+												? selectedProds[key].selectedQty
+												: 1}
 										</p>
 									</Form.Item>
 								</Col>
 								<Col span={3}>
-									<Form.Item {...restField} name={[name, "box_no"]}>
+									<Form.Item
+										{...restField}
+										name={[name, "box_no"]}
+									>
 										<InputNumber
 											style={{ width: "100%" }}
-											placeholder='Boxes'
-											onChange={(boxNo) => handleSelectedProdsQty(key, selectedProds[key] ? selectedProds[key].selectedQty : 1, boxNo)}
+											placeholder="Boxes"
+											onChange={(boxNo) =>
+												handleSelectedProdsQty(
+													key,
+													selectedProds[key]
+														? selectedProds[key]
+																.selectedQty
+														: 1,
+													selectedProds[key]
+														? selectedProds[key]
+																.unit_measurement
+														: 1,
+													boxNo
+												)
+											}
 											value={
-												selectedProds[key] ? (selectedProds[key].boxes ?? 1) : 1
+												selectedProds[key]
+													? selectedProds[key]
+															.boxes ?? 1
+													: 1
 											}
 										/>
 										<p style={{ display: "none" }}>
-											{selectedProds[key] ? selectedProds[key].boxes : 1}
+											{selectedProds[key]
+												? selectedProds[key].boxes
+												: 1}
 										</p>
 									</Form.Item>
 								</Col>
 								<Col span={3}>
-									<Form.Item {...restField} name={[name, "product_sale_price"]}>
+									<Form.Item
+										{...restField}
+										name={[name, "product_sale_price"]}
+									>
 										<InputNumber
-											placeholder='Sale price'
+											placeholder="Sale price"
 											onChange={(salePrice) =>
-												handleSelectedProdsSalePrice(key, salePrice)
+												handleSelectedProdsSalePrice(
+													key,
+													salePrice
+												)
 											}
 											value={
-												selectedProds[key] ? selectedProds[key].sale_price : ""
+												selectedProds[key]
+													? selectedProds[key]
+															.sale_price
+													: ""
 											}
 										/>
 										<p style={{ display: "none" }}>
-											{selectedProds[key] ? selectedProds[key].sale_price : ""}
+											{selectedProds[key]
+												? selectedProds[key].sale_price
+												: ""}
 										</p>
 									</Form.Item>
 								</Col>
 								<Col span={4}>
-									<div className='font-weight-bold text-center'>
+									<div className="font-weight-bold text-center">
 										{selectedProds[key] &&
 											selectedProds[key].selectedQty *
 												selectedProds[key].boxes}
@@ -145,22 +224,24 @@ export default function Products({
 								<Col span={2}>
 									<Form.Item>
 										<Button
-											shape='circle'
+											shape="circle"
 											icon={<DeleteOutlined />}
 											onClick={() => {
 												remove(name);
 												handleDeleteProd(key);
-											}}></Button>
+											}}
+										></Button>
 									</Form.Item>
 								</Col>
 							</Row>
 						))}
 						<Form.Item style={{ marginTop: "20px" }}>
 							<Button
-								type='dashed'
+								type="dashed"
 								onClick={() => add()}
 								block
-								icon={<PlusOutlined />}>
+								icon={<PlusOutlined />}
+							>
 								Add Product
 							</Button>
 						</Form.Item>

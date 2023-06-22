@@ -75,7 +75,7 @@ const AddSup = () => {
                 name="phone"
                 rules={[
                   {
-                    required: true,
+                    required: false,
                     message: "Please input supplier Phone!",
                   },
                 ]}>

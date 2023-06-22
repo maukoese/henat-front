@@ -77,21 +77,34 @@ export default function Products({
                 </Form.Item>
               </Col>
               <Col span={2}>
-                <div className='font-weight-bold'>
-                  {selectedProds[key] && selectedProds[key].unit_measurement
-                    ? selectedProds[key].unit_measurement
-                    : 0}
-                  {selectedProds[key] && selectedProds[key].unit_type
-                    ? selectedProds[key].unit_type
-                    : 'cm'}
-                </div>
+                <Form.Item {...restField} name={[name, "product_quantity"]}>
+                  <InputNumber
+                    style={{ width: "100%" }}
+                    placeholder='Length'
+                    onChange={(m) => handleSelectedProdsQty(
+                      key, 
+                      selectedProds[key] ? selectedProds[key].selectedQty : 1, 
+                      m,
+                      selectedProds[key] ? selectedProds[key].boxes : 1
+                      )}
+                    value={selectedProds[key] ? selectedProds[key].unit_measurement : 1}
+                  />
+                  <p style={{ display: "none" }}>
+                    {selectedProds[key] ? selectedProds[key].selectedQty : 1}
+                  </p>
+                </Form.Item>
               </Col>
               <Col span={3}>
                 <Form.Item {...restField} name={[name, "product_quantity"]}>
                   <InputNumber
                     style={{ width: "100%" }}
                     placeholder='Pack Rate'
-                    onChange={(qty) => handleSelectedProdsQty(key, qty, selectedProds[key] ? selectedProds[key].boxes : 1)}
+                    onChange={(qty) => handleSelectedProdsQty(
+                      key, 
+                      qty,
+                      selectedProds[key] ? selectedProds[key].unit_measurement : 1,
+                      selectedProds[key] ? selectedProds[key].boxes : 1
+                      )}
                     value={
                       selectedProds[key] ? selectedProds[key].pack_rate : 1
                     }
@@ -106,7 +119,12 @@ export default function Products({
                   <InputNumber
                     style={{ width: "100%" }}
                     placeholder='Boxes'
-                    onChange={(boxNo) => handleSelectedProdsQty(key, selectedProds[key] ? selectedProds[key].selectedQty : 1, boxNo)}
+                    onChange={(boxNo) => handleSelectedProdsQty(
+                      key, 
+                      selectedProds[key] ? selectedProds[key].selectedQty : 1,
+                      selectedProds[key] ? selectedProds[key].unit_measurement : 1, 
+                      boxNo
+                      )}
                     value={
                       selectedProds[key] ? (selectedProds[key].boxes ?? 1) : 1
                     }

@@ -1,8 +1,7 @@
 import { Button } from "antd";
 import moment from "moment";
 import React, { forwardRef, Fragment, useRef } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import getSetting from "../../api/getSettings";
 import number2words from "../../utils/numberToWords";
@@ -13,23 +12,21 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 		<Fragment>
 			<div ref={ref} className="wrapper">
 				<div className="box4">
-					<hr className="hr1" />
-					<h3 className="center">SALE INVOICE</h3>
-					<hr className="hr1" />
-				</div>
-
-				<div className="box4">
-					<hr className="hr1" />
-					<h3 className="center">SALE INVOICE</h3>
-					<hr className="hr1" />
+					<img
+						src="/henat.png"
+						width={150}
+						className="ms-4 mb-1 "
+						alt="Logo"
+					/>
+					<h4>{invoiceData?.company_name}</h4>
+					<p>{invoiceData?.address}</p>
+					<p>
+						{invoiceData?.email} . {invoiceData?.phone}
+					</p>
 				</div>
 
 				<div className="box5">
 					<table className="table2">
-						<tr>
-							<th>Client ID</th>
-							<td>{data?.customer_id}</td>
-						</tr>
 						<tr>
 							<th>Client Name</th>
 							<td>{data?.customer.name}</td>
@@ -38,15 +35,20 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 							<th>Address</th>
 							<td>{data?.customer.address}</td>
 						</tr>
-						<tr>
+						{/* <tr>
 							<th>Contact No</th>
 							<td>{data?.customer.phone}</td>
-						</tr>
+						</tr> */}
 					</table>
 				</div>
 
 				<div className="box6">
 					<table className="table2">
+						<tr>
+							<th colSpan={2}>
+								<h3 className="center">SALE INVOICE</h3>
+							</th>
+						</tr>
 						<tr>
 							<th>Invoice No</th>
 							<td>{data?.id}</td>
@@ -84,8 +86,10 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 										<td>{d.product_quantity}</td>
 										<td>{d.product_sale_price}</td>
 										<td>
-											{d.product_quantity *
-												d.product_sale_price}
+											{(
+												d.product_quantity *
+												d.product_sale_price
+											).toFixed(2)}
 										</td>
 									</tr>
 								))}
@@ -96,24 +100,46 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 				<div className="box9">
 					<table className="table2">
 						<tr>
+							<th>Box number</th>
+							<td>
+								{data &&
+									data.saleInvoiceProduct.reduce(
+										(p, c) => p + c.boxes,
+										0
+									)}
+							</td>
+						</tr>
+						<tr>
+							<th>Stem count</th>
+							<td>
+								{data &&
+									data.saleInvoiceProduct.reduce(
+										(p, c) => p + c.product_quantity,
+										0
+									)}
+							</td>
+						</tr>
+						<tr>
 							<th>Sub total</th>
-							<td>{data.total_amount}</td>
+							<td>{data.total_amount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Discount (-)</th>
-							<td>{data.discount}</td>
+							<td>{data.discount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Grand total</th>
-							<td>{data.total_amount - data.discount}</td>
+							<td>
+								{(data.total_amount - data.discount).toFixed(2)}
+							</td>
 						</tr>
 						<tr>
 							<th>Paid</th>
-							<td>{data.paid_amount}</td>
+							<td>{data.paid_amount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Due</th>
-							<td>{data.due_amount}</td>
+							<td>{data.due_amount.toFixed(2)}</td>
 						</tr>
 					</table>
 				</div>
@@ -130,14 +156,50 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 
 				<div className="box12">
 					<hr />
-					<p>Powered by ERP-OS | Contact: 01885 996601</p>
+					{invoiceData?.footer}
 				</div>
 
 				<div className="box13">
 					<p>
 						<b>In Words: </b>
-						{number2words(data.total_amount - data.discount)}
+						{number2words(
+							parseFloat(data.total_amount) -
+								parseFloat(data.discount)
+						).toUpperCase()}{" "}
+						USD
 					</p>
+
+					<div>
+						<table>
+							<tr>
+								<th colSpan={2}>Make payments to:</th>
+							</tr>
+							<tr>
+								<th>A/C NAME</th>
+								<td>Henat Enterprises Ltd</td>
+							</tr>
+							<tr>
+								<th>BANK NAME</th>
+								<td>I&M Bank Ltd</td>
+							</tr>
+							<tr>
+								<th>BRANCH</th>
+								<td>Gateway Mall</td>
+							</tr>
+							<tr>
+								<th>A/C NO</th>
+								<td>03101164281210 </td>
+							</tr>
+							<tr>
+								<th>CURRENCY</th>
+								<td>USD </td>
+							</tr>
+							<tr>
+								<th>SWIFT</th>
+								<td>IMBLKENA</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</div>
 		</Fragment>

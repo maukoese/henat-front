@@ -1,4 +1,4 @@
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Badge, Button, Card, Col, Popover, Row, Typography } from "antd";
 import { Fragment, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -66,42 +66,55 @@ const DetailSale = () => {
 
 	return (
 		<div>
-			<PageTitle title='Back' />
+			<PageTitle title="Back" />
 
-			<div className='mr-top'>
+			<div className="mr-top">
 				{singleSaleInvoice ? (
 					<Fragment key={singleSaleInvoice.id}>
-						<Card bordered={false} className='card-custom'>
-							<h5 className='m-2'>
-								<i className='bi bi-person-lines-fill'></i>
-								<span className='mr-left'>ID : {singleSaleInvoice.id} |</span>
+						<Card bordered={false} className="card-custom">
+							<h5 className="m-2">
+								<i className="bi bi-person-lines-fill"></i>
+								<span className="mr-left">
+									ID : {singleSaleInvoice.id} |
+								</span>
 							</h5>
-							<div className='card-header d-flex justify-content-center '>
-								<div className='me-2'>
+							<div className="card-header d-flex justify-content-center ">
+								<div className="me-2">
 									<Link to={`/sale/return/${id}`}>
-										<Button type='primary' shape='round'>
+										<Button type="primary" shape="round">
 											{" "}
 											Return Product{" "}
 										</Button>
 									</Link>
 								</div>
-								<div className='me-2'>
+								<div className="me-2">
+									<Link to={`/sale/${id}/edit`}>
+										<Button
+											type="primary"
+											shape="round"
+											icon={<EditOutlined />}
+										></Button>
+									</Link>
+								</div>
+								<div className="me-2">
 									<Popover
 										content={
 											<a onClick={onDelete}>
-												<Button type='primary' danger>
+												<Button type="primary" danger>
 													Yes Please !
 												</Button>
 											</a>
 										}
-										title='Are you sure you want to delete ?'
-										trigger='click'
+										title="Are you sure you want to delete ?"
+										trigger="click"
 										visible={visible}
-										onVisibleChange={handleVisibleChange}>
+										onVisibleChange={handleVisibleChange}
+									>
 										<Button
-											type='danger'
-											shape='round'
-											icon={<DeleteOutlined />}></Button>
+											type="danger"
+											shape="round"
+											icon={<DeleteOutlined />}
+										></Button>
 									</Popover>
 								</div>
 								<div className={"text-end me-2"}>
@@ -111,14 +124,19 @@ const DetailSale = () => {
 									<PackingSlip data={singleSaleInvoice} />
 								</div>
 							</div>
-							<div className='card-body'>
-								<Row justify='space-around'>
+							<div className="card-body">
+								<Row justify="space-around">
 									<Col span={11}>
 										<Badge.Ribbon
 											text={status}
-											color={status === "PAID" ? "green" : "red"}>
-											<CardComponent title='Sale Invoice Information '>
-												<h5 className='text-center mt-2 mb-2'>
+											color={
+												status === "PAID"
+													? "green"
+													: "red"
+											}
+										>
+											<CardComponent title="Sale Invoice Information ">
+												<h5 className="text-center mt-2 mb-2">
 													Initital Invoice Info
 												</h5>
 
@@ -126,14 +144,24 @@ const DetailSale = () => {
 													<Typography.Text strong>
 														Total Amount :
 													</Typography.Text>{" "}
-													<strong>{singleSaleInvoice.total_amount}</strong>
+													<strong>
+														{singleSaleInvoice.total_amount.toFixed(
+															2
+														)}
+													</strong>
 												</p>
 
 												<p>
-													<Typography.Text strong>Due Amount :</Typography.Text>{" "}
-													<strong style={{ color: "red" }}>
+													<Typography.Text strong>
+														Due Amount :
+													</Typography.Text>{" "}
+													<strong
+														style={{ color: "red" }}
+													>
 														{" "}
-														{singleSaleInvoice.due_amount}
+														{singleSaleInvoice.due_amount.toFixed(
+															2
+														)}
 													</strong>
 												</p>
 
@@ -141,28 +169,49 @@ const DetailSale = () => {
 													<Typography.Text strong>
 														Paid Amount :
 													</Typography.Text>{" "}
-													<strong>{singleSaleInvoice.paid_amount}</strong>
-												</p>
-
-												<p>
-													<Typography.Text strong>Discount :</Typography.Text>{" "}
-													<strong>{singleSaleInvoice.discount}</strong>
-												</p>
-
-												<p>
-													<Typography.Text strong>Profit :</Typography.Text>{" "}
-													<strong>{singleSaleInvoice.profit}</strong>
-												</p>
-
-												<p>
-													<Typography.Text strong>Sale Date :</Typography.Text>{" "}
 													<strong>
-														{singleSaleInvoice.created_at.slice(0, 10)}
+														{singleSaleInvoice.paid_amount.toFixed(
+															2
+														)}
+													</strong>
+												</p>
+
+												<p>
+													<Typography.Text strong>
+														Discount :
+													</Typography.Text>{" "}
+													<strong>
+														{singleSaleInvoice.discount.toFixed(
+															2
+														)}
+													</strong>
+												</p>
+
+												<p>
+													<Typography.Text strong>
+														Profit :
+													</Typography.Text>{" "}
+													<strong>
+														{singleSaleInvoice.profit.toFixed(
+															2
+														)}
+													</strong>
+												</p>
+
+												<p>
+													<Typography.Text strong>
+														Sale Date :
+													</Typography.Text>{" "}
+													<strong>
+														{singleSaleInvoice.created_at.slice(
+															0,
+															10
+														)}
 													</strong>
 												</p>
 
 												<div>
-													<h5 className='text-center mt-2 mb-2'>
+													<h5 className="text-center mt-2 mb-2">
 														Update Invoice Info
 													</h5>
 
@@ -170,22 +219,36 @@ const DetailSale = () => {
 														<Typography.Text strong>
 															Total Paid Amount :
 														</Typography.Text>{" "}
-														<strong>{totalPaidAmount}</strong>
+														<strong>
+															{totalPaidAmount.toFixed(
+																2
+															)}
+														</strong>
 													</p>
 
 													<p>
 														<Typography.Text strong>
 															Total Return Amount:
 														</Typography.Text>{" "}
-														<strong>{totalReturnAmount}</strong>
+														<strong>
+															{totalReturnAmount.toFixed(
+																2
+															)}
+														</strong>
 													</p>
 
 													<p>
 														<Typography.Text strong>
 															Due Amount :
 														</Typography.Text>{" "}
-														<strong style={{ color: "red" }}>
-															{dueAmount}
+														<strong
+															style={{
+																color: "red",
+															}}
+														>
+															{dueAmount.toFixed(
+																2
+															)}
 														</strong>
 													</p>
 												</div>
@@ -193,27 +256,47 @@ const DetailSale = () => {
 										</Badge.Ribbon>
 									</Col>
 									<Col span={12}>
-										<CardComponent title='Customer Information'>
+										<CardComponent title="Customer Information">
 											<p>
 												<Typography.Text strong>
 													Customer Name :
 												</Typography.Text>{" "}
-												<strong>{singleSaleInvoice.customer.name}</strong>
+												<strong>
+													{
+														singleSaleInvoice
+															.customer.name
+													}
+												</strong>
 											</p>
 
 											<p>
-												<Typography.Text strong>Due Amount :</Typography.Text>{" "}
-												<strong>{singleSaleInvoice.customer.due_amount}</strong>
+												<Typography.Text strong>
+													Due Amount :
+												</Typography.Text>{" "}
+												<strong>
+													{
+														singleSaleInvoice
+															.customer
+															?.due_amount
+													}
+												</strong>
 											</p>
 
-											<p>
+											{/* <p>
 												<Typography.Text strong>Phone :</Typography.Text>{" "}
 												<strong>{singleSaleInvoice.customer.phone}</strong>
-											</p>
+											</p> */}
 
 											<p>
-												<Typography.Text strong>Address :</Typography.Text>{" "}
-												<strong>{singleSaleInvoice.customer.address}</strong>
+												<Typography.Text strong>
+													Address :
+												</Typography.Text>{" "}
+												<strong>
+													{
+														singleSaleInvoice
+															.customer.address
+													}
+												</strong>
 											</p>
 										</CardComponent>
 									</Col>
@@ -221,7 +304,9 @@ const DetailSale = () => {
 								<br />
 							</div>
 						</Card>
-						<SaleProductListCard list={singleSaleInvoice.saleInvoiceProduct} />
+						<SaleProductListCard
+							list={singleSaleInvoice.saleInvoiceProduct}
+						/>
 
 						<ReturnSaleInvoiceList list={returnSaleInvoice} />
 

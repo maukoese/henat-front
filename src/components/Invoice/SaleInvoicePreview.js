@@ -97,23 +97,23 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 					<table className="table2">
 						<tr>
 							<th>Sub total</th>
-							<td>{data.total_amount}</td>
+							<td>{data.total_amount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Discount (-)</th>
-							<td>{data.discount}</td>
+							<td>{data.discount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Grand total</th>
-							<td>{data.total_amount - data.discount}</td>
+							<td>{(data.total_amount - data.discount).toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Paid</th>
-							<td>{data.paid_amount}</td>
+							<td>{data.paid_amount.toFixed(2)}</td>
 						</tr>
 						<tr>
 							<th>Due</th>
-							<td>{data.due_amount}</td>
+							<td>{data.due_amount.toFixed(2)}</td>
 						</tr>
 					</table>
 				</div>
@@ -130,7 +130,7 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 
 				<div className="box12">
 					<hr />
-					<p>Powered by ERP-OS | Contact: 01885 996601</p>
+					{invoiceData?.footer}
 				</div>
 
 				<div className="box13">

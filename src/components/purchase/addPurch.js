@@ -152,11 +152,11 @@ const AddPurch = () => {
     // }
   };
 
-  const handleSelectedProdsQty = (key, qty, boxes =1) => {
+  const handleSelectedProdsQty = (key, qty, unit_measurement, boxes =1) => {
     const updatedSelectedProds = selectedProds.map((prod, index) => {
       let prodCopy;
       if (key === index) {
-        prodCopy = { ...prod, selectedQty: qty, boxes };
+        prodCopy = { ...prod, selectedQty: qty, unit_measurement, boxes };
       } else prodCopy = { ...prod };
 
       return prodCopy;
@@ -254,7 +254,7 @@ const AddPurch = () => {
               Purchase New Products
             </Title>
           </Col>
-          <Col span={24} lg={16}>
+          <Col span={24} lg={24}>
             <div className="d-flex justify-content-between mb-1">
               <Form.Item
                 label="Supplier "
@@ -330,7 +330,7 @@ const AddPurch = () => {
             />
           </Col>
 
-          <Col span={24} lg={8}>
+          <Col span={24} lg={24}>
             <div
               style={{
                 padding: "10px 20px",
@@ -340,7 +340,7 @@ const AddPurch = () => {
               }}
             >
               <strong>Total: </strong>
-              <strong>{totalDiscountPaidDue.total} tk</strong>
+              <strong>{totalDiscountPaidDue.total} USD</strong>
             </div>
             <div
               style={{
@@ -377,7 +377,7 @@ const AddPurch = () => {
               <div>
                 <strong>After Discount: </strong>
               </div>
-              <strong>{totalDiscountPaidDue.afterDiscount} tk</strong>
+              <strong>{totalDiscountPaidDue.afterDiscount} USD</strong>
             </div>
             <div
               style={{
@@ -414,7 +414,7 @@ const AddPurch = () => {
               }}
             >
               <strong>Due Amount: </strong>
-              <strong>{totalDiscountPaidDue.due} tk</strong>
+              <strong>{totalDiscountPaidDue.due} USD</strong>
             </div>
 
             <Form.Item style={{ marginTop: "15px" }}>

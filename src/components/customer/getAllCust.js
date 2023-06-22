@@ -27,11 +27,11 @@ function CustomTable({ list, total, status }) {
       key: "name",
       render: (name, { id }) => <Link to={`/customer/${id}`}>{name}</Link>,
     },
-    {
-      title: "Phone",
-      dataIndex: "phone",
-      key: "phone",
-    },
+    // {
+    //   title: "Phone",
+    //   dataIndex: "phone",
+    //   key: "phone",
+    // },
     {
       title: "Address",
       dataIndex: "address",
