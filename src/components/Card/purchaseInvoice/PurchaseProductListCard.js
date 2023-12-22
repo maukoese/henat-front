@@ -17,21 +17,21 @@ const PurchaseProductListCard = ({ list, updateReturn, returnOnChange }) => {
         <Link to={`/product/${product.id}`}>{product.name}</Link>
       ),
     },
-    {
-      title: "Pack Rate",
-      dataIndex: "pack_rate",
-      key: "pack_rate",
-    },
+    // {
+    //   title: "Pack Rate",
+    //   dataIndex: "pack_rate",
+    //   key: "pack_rate",
+    // },
     {
       title: "Length",
       dataIndex: "length",
       key: "length",
     },
-    {
-      title: "Box No",
-      dataIndex: "boxes",
-      key: "boxes",
-    },
+    // {
+    //   title: "Box No",
+    //   dataIndex: "boxes",
+    //   key: "boxes",
+    // },
     {
       title: "Stem Count",
       dataIndex: "product_quantity",

@@ -56,6 +56,7 @@ function CustomTable({ list, total, startdate, enddate, count, user }) {
       title: "Total Amount",
       dataIndex: "total_amount",
       key: "total_amount",
+      // render: (amount) => amount.toFixed(2)
     },
     {
       title: "Discount",
@@ -67,12 +68,14 @@ function CustomTable({ list, total, startdate, enddate, count, user }) {
       dataIndex: "due_amount",
       key: "due_amount",
       responsive: ["md"],
-    },
+      // render: (amount) => amount.toFixed(2)
+     },
     {
       title: "Paid Amount",
       dataIndex: "paid_amount",
       key: "paid_amount",
       responsive: ["md"],
+      // render: (amount) => amount.toFixed(2)
     },
 
     //Update Supplier Name here

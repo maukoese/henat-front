@@ -2,7 +2,7 @@ import { ADD_SALE } from "../../types/SaleType";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-export const updateSale = (id, values) => {
+export const updateSale = (id, values, dueAmount) => {
 	return async (dispatch) => {
 		try {
 			const { data } = await axios({
@@ -14,6 +14,7 @@ export const updateSale = (id, values) => {
 				url: `sale-invoice/${id}`,
 				data: {
 					saleInvoiceProduct: values,
+					dueAmount
 				},
 			});
 			//dispatching data

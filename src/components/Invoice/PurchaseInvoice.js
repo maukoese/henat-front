@@ -10,13 +10,16 @@ import React, {
 import { useReactToPrint } from "react-to-print";
 import getSetting from "../../api/getSettings";
 import number2words from "../../utils/numberToWords";
+import { useDownloadExcel } from 'react-export-table-to-excel';
 import "./style.css";
 
 const PrintToPdf = forwardRef(({ data }, ref) => {
 	const [invoiceData, setInvoiceData] = useState(null);
+	
 	useEffect(() => {
 		getSetting().then((data) => setInvoiceData(data.result));
 	}, []);
+
 	return (
 		<Fragment>
 			<div ref={ref} className="wrapper">
@@ -43,6 +46,7 @@ const PrintToPdf = forwardRef(({ data }, ref) => {
         </div> */}
 
 				<div className="box5">
+
 					<table className="table2">
 						<tr>
 							<th>Client ID</th>
@@ -181,14 +185,60 @@ const PurchaseInvoice = ({ data }) => {
 		content: () => componentRef.current,
 	});
 
+	const tableRef = useRef(null);
+  
+	const { onDownload } = useDownloadExcel({
+		currentTableRef: tableRef.current,
+		filename: 'Purchase '+ (new Date()).getTime(),
+		sheet: 'Purchase'
+	})
+
 	return (
 		<div>
 			<div className="hidden">
 				<PrintToPdf ref={componentRef} data={data} />
 			</div>
+			
 			<Button type="primary" shape="round" onClick={handlePrint}>
 				Print
 			</Button>
+
+			<Button className='ml-1' onClick={onDownload}> Export to excel </Button>
+			
+			<table className="d-none" ref={tableRef}>
+						<thead>
+							<th>S.No</th>
+							<th>Variety</th>
+							<th>Length</th>
+							<th>Pack Rate</th>
+							<th>Box No.</th>
+							<th>Stem Count</th>
+							<th>Unit Price</th>
+							<th>Total Price</th>
+						</thead>
+						<tbody>
+							{data &&
+								data.purchaseInvoiceProduct.map((d) => (
+									<tr>
+										<td>{d.id}</td>
+										<td>
+											<p>{d.product.name}</p>
+										</td>
+										<td>{d["length"]}cm</td>
+										<td>{d.pack_rate}</td>
+										<td>{d.boxes}</td>
+										<td>{d.product_quantity}</td>
+										<td>{d.product_purchase_price}</td>
+										<td>
+											{(
+												d.product_quantity *
+												d.product_purchase_price
+											).toFixed(2)}
+										</td>
+									</tr>
+								))}
+						</tbody>
+					</table>
 		</div>
 	);
 };

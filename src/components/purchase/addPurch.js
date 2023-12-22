@@ -146,7 +146,9 @@ const AddPurch = () => {
       updatedSelectedProds[key] = { ...foundProd, selectedQty: 1, boxes: 1 };
       setSelectedProds(updatedSelectedProds);
     } else {
-      setSelectedProds((prev) => [...prev, { ...foundProd, selectedQty:  foundProd.pack_rate, boxes: 1 }]);
+      setSelectedProds((prev) => [
+        ...prev, 
+        { ...foundProd, selectedQty:  foundProd.pack_rate, boxes: 1 }]);
     }
 
     // }

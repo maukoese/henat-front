@@ -1,4 +1,4 @@
-import { Col, InputNumber, Row, Table, Button } from "antd";
+import { Col, InputNumber, Row, Table, Button, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DeleteOutlined, SaveOutlined } from "@ant-design/icons";
@@ -6,9 +6,15 @@ import { DeleteOutlined, SaveOutlined } from "@ant-design/icons";
 const SaleProductListCard = ({
 	invoiceId,
 	list,
+	totals,
+	paid,
 	updateReturn,
 	returnOnChange,
 	updateInvoice,
+	setAmount,
+	setDue,
+	setStems,
+	products,
 }) => {
 	const [fields, setFields] = useState({});
 
@@ -19,10 +25,44 @@ const SaleProductListCard = ({
 			newFields[product_id]["pack_rate"] * newFields[product_id]["boxes"];
 
 		setFields(newFields);
+
+		setStems(
+			Object.values(newFields).reduce(
+				(p, item) => p + parseFloat(item.product_quantity),
+				0
+			)
+		);
+
+		const totalAmount = Object.values(newFields).reduce(
+			(p, item) =>
+				p +
+				parseFloat(item.product_sale_price) *
+					parseFloat(item.product_quantity),
+			0
+		);
+
+		setDue(totalAmount - paid);
+		setAmount(totalAmount);
 	};
 
 	const removeItem = (item) => {
 		list.splice(list.indexOf(item), 1);
+	};
+
+	const addItem = (newProd) => {
+		const product = products.find((p) => p.id === newProd);
+
+		list.push({
+			id: newProd,
+			product_id: product.id,
+			invoice_id: product.invoice_id,
+			product_quantity: 1,
+			product_sale_price: product.sale_price,
+			boxes: 0,
+			pack_rate: product.pack_rate,
+			product,
+			length: product.unit_measurement,
+		});
 	};
 
 	const addKeys = (arr) => arr.map((i) => ({ ...i, key: i.id }));
@@ -194,19 +234,52 @@ const SaleProductListCard = ({
 						method="POST"
 						onSubmit={updateInvoice}
 					>
-						<Button
-							type="primary"
-							htmlType="submit"
-							icon={<SaveOutlined />}
-							onClick={(e) => {
-								e.preventDefault();
-								updateInvoice(invoiceId, fields);
-							}}
-							className="mb-2"
-						>
-							Update Invoice
-						</Button>
+						<div className="row">
+							<div className="col-md-3">
+								<Button
+									type="primary"
+									htmlType="submit"
+									icon={<SaveOutlined />}
+									onClick={(e) => {
+										e.preventDefault();
+										updateInvoice(invoiceId, fields);
+									}}
+									className="mb-2"
+								>
+									Update Invoice
+								</Button>
+							</div>
 
+							<div className="col-md-4 offset-md-5">
+								<div
+									className="input-group"
+									style={{ width: "100px;" }}
+								>
+									<Select
+										placeholder="Add Product"
+										showSearch
+										optionFilterProp="children"
+										filterOption={(input, option) =>
+											option.children
+												.toLowerCase()
+												.includes(input.toLowerCase())
+										}
+										onChange={addItem}
+									>
+										{Array.isArray(products) &&
+											products.map((p) => (
+												<Select.Option
+													key={p.id}
+													value={p.id}
+												>
+													{p.name}
+												</Select.Option>
+											))}
+									</Select>
+								</div>
+							</div>
+						</div>
+						
 						<Table
 							scroll={{ x: true }}
 							loading={!list}
@@ -214,6 +287,8 @@ const SaleProductListCard = ({
 							dataSource={list ? addKeys(list) : []}
 						/>
 
+						{totals && totals}
+
 						<Button
 							type="primary"
 							htmlType="submit"
@@ -222,7 +297,7 @@ const SaleProductListCard = ({
 								e.preventDefault();
 								updateInvoice(invoiceId, fields);
 							}}
-							className="mt-n4"
+							className="mt-4"
 						>
 							Update Invoice
 						</Button>

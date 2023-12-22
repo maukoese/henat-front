@@ -84,8 +84,8 @@ const AddSale = () => {
 		try {
 			const valueData = {
 				date: date,
-				paid_amount: totalDiscountPaidDue.paid,
-				discount: totalDiscountPaidDue.discount,
+				paid_amount: totalDiscountPaidDue.paid.toFixed(2),
+				discount: totalDiscountPaidDue.discount.toFixed(2),
 				customer_id: customer,
 				user_id: salesPerson,
 				saleInvoiceProduct,

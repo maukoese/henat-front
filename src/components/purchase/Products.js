@@ -18,6 +18,7 @@ export default function Products({
   handleSelectedProds,
   handleSelectedProdsPurchasePrice,
 }) {
+
   return (
     <>
       <Row gutter={[16]}>
