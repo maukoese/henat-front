@@ -32,7 +32,7 @@ const EditDetailSale = () => {
 
 	//dispatch
 	const dispatch = useDispatch();
-	const sale = useSelector((state) => state.sales.sale);
+	const sale = useSelector(state => state.sales.sale);
 	const { singleSaleInvoice } = sale ? sale : {};
 
 	const updateInvoice = (invoiceId, fields) => {
@@ -57,7 +57,7 @@ const EditDetailSale = () => {
 	};
 	// Delete Customer PopUp
 
-	const handleVisibleChange = (newVisible) => {
+	const handleVisibleChange = newVisible => {
 		setVisible(newVisible);
 	};
 
@@ -89,7 +89,7 @@ const EditDetailSale = () => {
 	}, [id]);
 
 	const isLogged = Boolean(localStorage.getItem("isLogged"));
-	const allProducts = useSelector((state) => state.products.list);
+	const allProducts = useSelector(state => state.products.list);
 
 	if (!isLogged) {
 		return <Navigate to={"/auth/login"} replace={true} />;
@@ -104,7 +104,9 @@ const EditDetailSale = () => {
 					<Fragment key={singleSaleInvoice.id}>
 						<SaleProductEditCard
 							invoiceId={singleSaleInvoice.id}
-							list={singleSaleInvoice.saleInvoiceProduct}
+							invoiceProducts={
+								singleSaleInvoice.saleInvoiceProduct
+							}
 							updateInvoice={updateInvoice}
 							setAmount={setTotalAmount}
 							setStems={setTotalStems}
@@ -113,18 +115,31 @@ const EditDetailSale = () => {
 							products={allProducts}
 							totals={
 								<table>
-									<tr>
-										<th>Total amount</th>
-										<td>USD {totalAmount?.toFixed(2)}</td>
-									</tr>
-									<tr>
-										<th>Total due</th>
-										<td>USD {totalDue?.toFixed(2)}</td>
-									</tr>
-									<tr>
-										<th>Total stems</th>
-										<td>{totalStems}</td>
-									</tr>
+									<tbody>
+										<tr>
+											<th>Total amount</th>
+											<td>
+												USD {totalAmount?.toFixed(2)}
+											</td>
+										</tr>
+										<tr>
+											<th>Paid amount</th>
+											<td>
+												USD{" "}
+												{singleSaleInvoice.paid_amount?.toFixed(
+													2
+												)}
+											</td>
+										</tr>
+										<tr>
+											<th>Total due</th>
+											<td>USD {totalDue?.toFixed(2)}</td>
+										</tr>
+										<tr>
+											<th>Total stems</th>
+											<td>{totalStems}</td>
+										</tr>
+									</tbody>
 								</table>
 							}
 						/>

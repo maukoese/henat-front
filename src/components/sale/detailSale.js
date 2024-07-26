@@ -78,8 +78,8 @@ const DetailSale = () => {
 									ID : {singleSaleInvoice.id} |
 								</span>
 							</h5>
-							<div className="card-header d-flex justify-content-center ">
-								<div className="me-2">
+							<div className="card-header d-flex justify-content-center">
+								<div className="me-2 mb-2">
 									<Link to={`/sale/return/${id}`}>
 										<Button type="primary" shape="round">
 											{" "}

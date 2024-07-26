@@ -346,3 +346,8 @@ body {
 .table-hover {
 	color: var(--text);
 }
+
+.hidden {
+	display: none;
+	visibility: hidden;
+}
