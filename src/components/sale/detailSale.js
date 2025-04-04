@@ -107,8 +107,8 @@ const DetailSale = () => {
 										}
 										title="Are you sure you want to delete ?"
 										trigger="click"
-										visible={visible}
-										onVisibleChange={handleVisibleChange}
+										open={visible}
+										onOpenChange={handleVisibleChange}
 									>
 										<Button
 											type="danger"
@@ -165,13 +165,16 @@ const DetailSale = () => {
 																{(
 																	singleSaleInvoice.total_amount +
 																	parseFloat(
-																		singleSaleInvoice.documentation
+																		singleSaleInvoice.documentation ??
+																			0
 																	) +
 																	parseFloat(
-																		singleSaleInvoice.freight
+																		singleSaleInvoice.freight ??
+																			0
 																	) +
 																	parseFloat(
-																		singleSaleInvoice.handling
+																		singleSaleInvoice.handling ??
+																			0
 																	)
 																).toFixed(2)}
 															</strong>
@@ -192,13 +195,16 @@ const DetailSale = () => {
 																{(
 																	singleSaleInvoice.due_amount +
 																	parseFloat(
-																		singleSaleInvoice.documentation
+																		singleSaleInvoice.documentation ??
+																			0
 																	) +
 																	parseFloat(
-																		singleSaleInvoice.freight
+																		singleSaleInvoice.freight ??
+																			0
 																	) +
 																	parseFloat(
-																		singleSaleInvoice.handling
+																		singleSaleInvoice.handling ??
+																			0
 																	)
 																).toFixed(2)}
 															</strong>
@@ -257,6 +263,7 @@ const DetailSale = () => {
 															</strong>
 														</p>
 													</Col>
+
 													<Col span={6}>
 														<p>
 															<Typography.Text
@@ -277,9 +284,8 @@ const DetailSale = () => {
 																Documentation:
 															</Typography.Text>{" "}
 															<strong>
-																{
-																	singleSaleInvoice.documentation
-																}
+																{singleSaleInvoice.documentation ??
+																	0}
 															</strong>
 														</p>
 														<p>
@@ -348,13 +354,16 @@ const DetailSale = () => {
 															{(
 																singleSaleInvoice.total_amount +
 																parseFloat(
-																	singleSaleInvoice.documentation
+																	singleSaleInvoice.documentation ??
+																		0
 																) +
 																parseFloat(
-																	singleSaleInvoice.freight
+																	singleSaleInvoice.freight ??
+																		0
 																) +
 																parseFloat(
-																	singleSaleInvoice.handling
+																	singleSaleInvoice.handling ??
+																		0
 																) -
 																totalPaidAmount
 															).toFixed(2)}

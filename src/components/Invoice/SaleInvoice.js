@@ -141,7 +141,7 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 						</tr>
 						<tr>
 							<th>Documentation</th>
-							<td>{data.documentation}</td>
+							<td>{data.documentation?? 0}</td>
 						</tr>
 						<tr>
 							<th>Freight</th>
@@ -156,9 +156,9 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 							<td>
 								{(
 									data.total_amount +
-									parseFloat(data.documentation) +
-									parseFloat(data.freight) +
-									parseFloat(data.handling) -
+									parseFloat(data.documentation?? 0) +
+									parseFloat(data.freight?? 0) +
+									parseFloat(data.handling?? 0) -
 									data.discount
 								).toFixed(2)}
 							</td>
@@ -172,9 +172,9 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 							<td>
 								{(
 									data.due_amount +
-									parseFloat(data.documentation) +
-									parseFloat(data.freight) +
-									parseFloat(data.handling)
+									parseFloat(data.documentation?? 0) +
+									parseFloat(data.freight?? 0) +
+									parseFloat(data.handling?? 0)
 								).toFixed(2)}
 							</td>
 						</tr>
@@ -201,9 +201,9 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 						<b>In Words: </b>
 						{number2words(
 							parseFloat(data.total_amount) +
-								parseFloat(data.documentation) +
-								parseFloat(data.freight) +
-								parseFloat(data.handling) -
+								parseFloat(data.documentation ?? 0) +
+								parseFloat(data.freight ?? 0) +
+								parseFloat(data.handling ?? 0) -
 								parseFloat(data.discount)
 						).toUpperCase()}{" "}
 						USD
