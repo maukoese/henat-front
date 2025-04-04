@@ -1,11 +1,13 @@
-import { Button } from "antd";
-import moment from "moment";
-import React, { forwardRef, Fragment, useRef } from "react";
-import { useState, useEffect } from "react";
-import { useReactToPrint } from "react-to-print";
-import getSetting from "../../api/getSettings";
-import number2words from "../../utils/numberToWords";
 import "./style.css";
+
+import React, { Fragment, forwardRef, useRef } from "react";
+import { useEffect, useState } from "react";
+
+import { Button } from "antd";
+import getSetting from "../../api/getSettings";
+import moment from "moment";
+import number2words from "../../utils/numberToWords";
+import { useReactToPrint } from "react-to-print";
 
 const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 	return (
@@ -34,6 +36,10 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 						<tr>
 							<th>Address</th>
 							<td>{data?.customer.address}</td>
+						</tr>
+						<tr>
+							<th>H.S Code</th>
+							<td>{data.hs_code}</td>
 						</tr>
 						{/* <tr>
 							<th>Contact No</th>
@@ -74,7 +80,7 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 						</thead>
 						<tbody>
 							{data &&
-								data.saleInvoiceProduct.map((d) => (
+								data.saleInvoiceProduct.map(d => (
 									<tr key={d.id}>
 										<td>{d.id}</td>
 										<td>
@@ -128,9 +134,33 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 							<td>{data.discount.toFixed(2)}</td>
 						</tr>
 						<tr>
-							<th>Grand total</th>
+							<th>Flower total</th>
 							<td>
 								{(data.total_amount - data.discount).toFixed(2)}
+							</td>
+						</tr>
+						<tr>
+							<th>Documentation</th>
+							<td>{data.documentation}</td>
+						</tr>
+						<tr>
+							<th>Freight</th>
+							<td>{data.freight}</td>
+						</tr>
+						<tr>
+							<th>Handling</th>
+							<td>{data.handling}</td>
+						</tr>
+						<tr>
+							<th>Grand total</th>
+							<td>
+								{(
+									data.total_amount +
+									parseFloat(data.documentation) +
+									parseFloat(data.freight) +
+									parseFloat(data.handling) -
+									data.discount
+								).toFixed(2)}
 							</td>
 						</tr>
 						<tr>
@@ -139,7 +169,14 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 						</tr>
 						<tr>
 							<th>Due</th>
-							<td>{data.due_amount.toFixed(2)}</td>
+							<td>
+								{(
+									data.due_amount +
+									parseFloat(data.documentation) +
+									parseFloat(data.freight) +
+									parseFloat(data.handling)
+								).toFixed(2)}
+							</td>
 						</tr>
 					</table>
 				</div>
@@ -163,7 +200,10 @@ const PrintToPdf = forwardRef(({ data, invoiceData }, ref) => {
 					<p>
 						<b>In Words: </b>
 						{number2words(
-							parseFloat(data.total_amount) -
+							parseFloat(data.total_amount) +
+								parseFloat(data.documentation) +
+								parseFloat(data.freight) +
+								parseFloat(data.handling) -
 								parseFloat(data.discount)
 						).toUpperCase()}{" "}
 						USD
@@ -214,7 +254,7 @@ const SaleInvoice = ({ data }) => {
 
 	const [invoiceData, setInvoiceData] = useState(null);
 	useEffect(() => {
-		getSetting().then((data) => setInvoiceData(data.result));
+		getSetting().then(data => setInvoiceData(data.result));
 	}, []);
 
 	return (

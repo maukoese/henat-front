@@ -1,11 +1,12 @@
 import { Affix, Drawer, Layout } from "antd";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import Sidenav from "../Sidenav/Sidenav";
+
 import Footer from "./Footer";
 import Header from "./Header";
-import styles from "./Main.module.css";
 import QuickLinks from "./QuickLinks";
+import Sidenav from "../Sidenav/Sidenav";
+import styles from "./Main.module.css";
+import { useLocation } from "react-router-dom";
 
 const { Header: AntHeader, Content, Sider } = Layout;
 
@@ -53,7 +54,7 @@ function Main({ children }) {
 					placement={placement === "right" ? "left" : "right"}
 					closable={false}
 					onClose={() => setVisible(false)}
-					visible={visible}
+					open={visible}
 					key={placement === "right" ? "left" : "right"}
 					width={220}>
 					<Layout>

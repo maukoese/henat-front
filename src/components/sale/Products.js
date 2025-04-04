@@ -1,9 +1,11 @@
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { Button, Col, Form, InputNumber, Row, Select } from "antd";
-import { useDispatch } from "react-redux";
-import { loadSingleProduct } from "../../redux/actions/product/detailProductAction";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
-const getItemTotal = (item) => {
+import { Fragment } from "react";
+import { loadSingleProduct } from "../../redux/actions/product/detailProductAction";
+import { useDispatch } from "react-redux";
+
+const getItemTotal = item => {
 	if (!item || typeof item !== "object") return 0;
 	var totalPrice = item.product_quantity * item.product_sale_price;
 	if (isNaN(totalPrice)) totalPrice = 0;
@@ -74,12 +76,12 @@ export default function Products({
 														input.toLowerCase()
 													)
 											}
-											onChange={(prodId) =>
+											onChange={prodId =>
 												handleSelectedProds(prodId, key)
 											}
 										>
 											{Array.isArray(allProducts) &&
-												allProducts.map((p) => (
+												allProducts.map(p => (
 													<Select.Option
 														key={p.id}
 														value={p.id}
@@ -94,7 +96,7 @@ export default function Products({
 									<InputNumber
 										style={{ width: "100%" }}
 										placeholder="Length"
-										onChange={(m) =>
+										onChange={m =>
 											handleSelectedProdsQty(
 												key,
 												selectedProds[key]
@@ -120,35 +122,38 @@ export default function Products({
 										{...restField}
 										name={[name, "product_quantity"]}
 									>
-										<InputNumber
-											style={{ width: "100%" }}
-											placeholder="Pack Rate"
-											onChange={(qty) =>
-												handleSelectedProdsQty(
-													key,
-													qty,
+										<Fragment>
+											<InputNumber
+												style={{ width: "100%" }}
+												placeholder="Pack Rate"
+												onChange={qty =>
+													handleSelectedProdsQty(
+														key,
+														qty,
+														selectedProds[key]
+															? selectedProds[key]
+																	.unit_measurement
+															: 1,
+														selectedProds[key]
+															? selectedProds[key]
+																	.boxes
+															: 1
+													)
+												}
+												value={
 													selectedProds[key]
 														? selectedProds[key]
-																.unit_measurement
-														: 1,
-													selectedProds[key]
-														? selectedProds[key]
-																.boxes
+																.selectedQty
 														: 1
-												)
-											}
-											value={
-												selectedProds[key]
+												}
+											/>
+											<p style={{ display: "none" }}>
+												{selectedProds[key]
 													? selectedProds[key]
 															.selectedQty
-													: 1
-											}
-										/>
-										<p style={{ display: "none" }}>
-											{selectedProds[key]
-												? selectedProds[key].selectedQty
-												: 1}
-										</p>
+													: 1}
+											</p>
+										</Fragment>
 									</Form.Item>
 								</Col>
 								<Col span={3}>
@@ -156,35 +161,37 @@ export default function Products({
 										{...restField}
 										name={[name, "box_no"]}
 									>
-										<InputNumber
-											style={{ width: "100%" }}
-											placeholder="Boxes"
-											onChange={(boxNo) =>
-												handleSelectedProdsQty(
-													key,
+										<Fragment>
+											<InputNumber
+												style={{ width: "100%" }}
+												placeholder="Boxes"
+												onChange={boxNo =>
+													handleSelectedProdsQty(
+														key,
+														selectedProds[key]
+															? selectedProds[key]
+																	.selectedQty
+															: 1,
+														selectedProds[key]
+															? selectedProds[key]
+																	.unit_measurement
+															: 1,
+														boxNo
+													)
+												}
+												value={
 													selectedProds[key]
 														? selectedProds[key]
-																.selectedQty
-														: 1,
-													selectedProds[key]
-														? selectedProds[key]
-																.unit_measurement
-														: 1,
-													boxNo
-												)
-											}
-											value={
-												selectedProds[key]
-													? selectedProds[key]
-															.boxes ?? 1
-													: 1
-											}
-										/>
-										<p style={{ display: "none" }}>
-											{selectedProds[key]
-												? selectedProds[key].boxes
-												: 1}
-										</p>
+																.boxes ?? 1
+														: 1
+												}
+											/>
+											<p style={{ display: "none" }}>
+												{selectedProds[key]
+													? selectedProds[key].boxes
+													: 1}
+											</p>
+										</Fragment>
 									</Form.Item>
 								</Col>
 								<Col span={3}>
@@ -192,26 +199,29 @@ export default function Products({
 										{...restField}
 										name={[name, "product_sale_price"]}
 									>
-										<InputNumber
-											placeholder="Sale price"
-											onChange={(salePrice) =>
-												handleSelectedProdsSalePrice(
-													key,
-													salePrice
-												)
-											}
-											value={
-												selectedProds[key]
+										<Fragment>
+											<InputNumber
+												placeholder="Sale price"
+												onChange={salePrice =>
+													handleSelectedProdsSalePrice(
+														key,
+														salePrice
+													)
+												}
+												value={
+													selectedProds[key]
+														? selectedProds[key]
+																.sale_price
+														: ""
+												}
+											/>
+											<p style={{ display: "none" }}>
+												{selectedProds[key]
 													? selectedProds[key]
 															.sale_price
-													: ""
-											}
-										/>
-										<p style={{ display: "none" }}>
-											{selectedProds[key]
-												? selectedProds[key].sale_price
-												: ""}
-										</p>
+													: ""}
+											</p>
+										</Fragment>
 									</Form.Item>
 								</Col>
 								<Col span={4}>

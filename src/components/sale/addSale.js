@@ -1,28 +1,29 @@
+import "./sale.css";
+
 import {
 	Button,
 	Card,
 	Col,
 	DatePicker,
 	Form,
+	Input,
 	InputNumber,
 	Row,
 	Select,
 	Typography,
 } from "antd";
-
-import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadAllCustomer } from "../../redux/actions/customer/getCustomerAction";
-import { loadProduct } from "../../redux/actions/product/getAllProductAction";
-import { addSale } from "../../redux/actions/sale/addSaleAction";
-import Products from "./Products";
-import "./sale.css";
+import { useEffect, useState } from "react";
 
-import moment from "moment";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { loadAllStaff } from "../../redux/actions/user/getStaffAction";
+import Products from "./Products";
+import { addSale } from "../../redux/actions/sale/addSaleAction";
+import { loadAllCustomer } from "../../redux/actions/customer/getCustomerAction";
 import { loadAllSale } from "../../redux/actions/sale/getSaleAction";
+import { loadAllStaff } from "../../redux/actions/user/getStaffAction";
+import { loadProduct } from "../../redux/actions/product/getAllProductAction";
+import moment from "moment";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -41,16 +42,16 @@ const AddSale = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(loadAllCustomer({ page: 1, limit: 100 }));
+		dispatch(loadAllCustomer({ page: 1, limit: 1000 }));
 	}, []);
 
 	useEffect(() => {
-		dispatch(loadProduct({ page: 1, limit: 200 }));
+		dispatch(loadProduct({ page: 1, limit: 1000 }));
 	}, []);
 
-	const allCustomer = useSelector((state) => state.customers.list);
-	const allProducts = useSelector((state) => state.products.list);
-	const allStaff = useSelector((state) => state.users.list);
+	const allCustomer = useSelector(state => state.customers.list);
+	const allProducts = useSelector(state => state.products.list);
+	const allStaff = useSelector(state => state.users.list);
 
 	useEffect(() => {
 		dispatch(loadAllStaff({ status: "true" }));
@@ -58,9 +59,11 @@ const AddSale = () => {
 
 	const [customer, setCustomer] = useState(null);
 	const [salesPerson, setSalesPerson] = useState(null);
+	const [documentation, setDocumentation] = useState(0);
 
 	// Form Function
 	const [form] = Form.useForm();
+	
 	const [totalDiscountPaidDue, setTotalDiscountPaidDue] = useState({
 		total: 0,
 		discount: 0,
@@ -69,8 +72,8 @@ const AddSale = () => {
 		due: 0,
 	});
 
-	const onFormSubmit = async (values) => {
-		const saleInvoiceProduct = selectedProds.map((prod) => {
+	const onFormSubmit = async () => {
+		const saleInvoiceProduct = selectedProds.map(prod => {
 			return {
 				product_id: prod.id,
 				product_quantity: prod.selectedQty * prod.boxes,
@@ -83,13 +86,18 @@ const AddSale = () => {
 
 		try {
 			const valueData = {
-				date: date,
 				paid_amount: totalDiscountPaidDue.paid.toFixed(2),
 				discount: totalDiscountPaidDue.discount.toFixed(2),
 				customer_id: customer,
 				user_id: salesPerson,
 				saleInvoiceProduct,
+				documentation: formData.documentation,
+				freight: formData.freight,
+				handling: formData.handling,
+				hsCode: formData.hsCode,
+				date
 			};
+			
 			const resp = await dispatch(addSale(valueData));
 
 			if (resp.message === "success") {
@@ -142,18 +150,18 @@ const AddSale = () => {
 	};
 
 	// Select Supplier Funciton
-	const onChange = async (values) => {
+	const onChange = async values => {
 		updateFormData();
 	};
 
-	const onSearch = (value) => {};
+	const onSearch = value => {};
 
 	// Products Handlers
 
 	const [selectedProds, setSelectedProds] = useState([]);
 
 	const handleSelectedProds = (prodId, key) => {
-		const foundProd = allProducts.find((item) => item.id === prodId);
+		const foundProd = allProducts.find(item => item.id === prodId);
 		// if (foundProd === undefined) {
 		let updatedSelectedProds = [...selectedProds];
 
@@ -165,7 +173,7 @@ const AddSale = () => {
 			};
 			setSelectedProds(updatedSelectedProds);
 		} else {
-			setSelectedProds((prev) => [
+			setSelectedProds(prev => [
 				...prev,
 				{ ...foundProd, selectedQty: foundProd.pack_rate, boxes: 1 },
 			]);
@@ -204,7 +212,7 @@ const AddSale = () => {
 		setSelectedProds(updatedSelectedProds);
 	};
 
-	const handleDeleteProd = (key) => {
+	const handleDeleteProd = key => {
 		if (selectedProds[key]) {
 			const updatedProds = selectedProds.filter(
 				(prod, index) => key !== index
@@ -213,13 +221,13 @@ const AddSale = () => {
 		}
 	};
 
-	const handleDiscount = (discountAmount) => {
+	const handleDiscount = discountAmount => {
 		const afterDiscount = totalDiscountPaidDue.total - discountAmount;
 		let dueAmount = totalDiscountPaidDue.total - discountAmount;
 		if (totalDiscountPaidDue.paid > 0) {
 			dueAmount = dueAmount - totalDiscountPaidDue.paid;
 		}
-		setTotalDiscountPaidDue((prev) => ({
+		setTotalDiscountPaidDue(prev => ({
 			...prev,
 			discount: discountAmount,
 			due: dueAmount,
@@ -227,9 +235,9 @@ const AddSale = () => {
 		}));
 	};
 
-	const handlePaid = (paidAmount) => {
+	const handlePaid = paidAmount => {
 		const dueAmount = totalDiscountPaidDue.afterDiscount - paidAmount;
-		setTotalDiscountPaidDue((prev) => ({
+		setTotalDiscountPaidDue(prev => ({
 			...prev,
 			paid: paidAmount,
 			due: dueAmount,
@@ -242,7 +250,7 @@ const AddSale = () => {
 			let afterDiscount = 0;
 			let due = 0;
 
-			selectedProds.forEach((prod) => {
+			selectedProds.forEach(prod => {
 				total += prod.sale_price * prod.selectedQty * prod.boxes;
 			});
 
@@ -254,7 +262,7 @@ const AddSale = () => {
 				due = afterDiscount - totalDiscountPaidDue.paid;
 			} else due = afterDiscount;
 
-			setTotalDiscountPaidDue((prev) => ({
+			setTotalDiscountPaidDue(prev => ({
 				...prev,
 				total,
 				afterDiscount,
@@ -288,6 +296,7 @@ const AddSale = () => {
 							Sale New Products
 						</Title>
 					</Col>
+
 					<Col span={24} lg={24}>
 						<div className="d-flex justify-content-between mb-1">
 							<Form.Item
@@ -306,7 +315,7 @@ const AddSale = () => {
 									showSearch
 									placeholder="Select a customer "
 									optionFilterProp="children"
-									onChange={(id) => setCustomer(id)}
+									onChange={id => setCustomer(id)}
 									onSearch={onSearch}
 									filterOption={(input, option) =>
 										option.children
@@ -315,7 +324,7 @@ const AddSale = () => {
 									}
 								>
 									{allCustomer &&
-										allCustomer.map((sup) => (
+										allCustomer.map(sup => (
 											<Option key={sup.id} value={sup.id}>
 												{sup.name}
 											</Option>
@@ -323,9 +332,15 @@ const AddSale = () => {
 								</Select>
 							</Form.Item>
 
+							<Form.Item name="hsCode" label="HS Code">
+								<Input
+									placeholder="HS Code"
+								/>
+							</Form.Item>
+
 							<Form.Item label="Date" required>
 								<DatePicker
-									onChange={(value) => setDate(value._d)}
+									onChange={value => setDate(value._d)}
 									defaultValue={date}
 									style={{ marginBottom: "10px" }}
 									label="date"
@@ -357,7 +372,7 @@ const AddSale = () => {
 									showSearch
 									placeholder="Select sales person "
 									optionFilterProp="children"
-									onChange={(id) => setSalesPerson(id)}
+									onChange={id => setSalesPerson(id)}
 									onSearch={onSearch}
 									filterOption={(input, option) =>
 										option.children
@@ -366,7 +381,7 @@ const AddSale = () => {
 									}
 								>
 									{allStaff &&
-										allStaff?.map((info) => (
+										allStaff?.map(info => (
 											<Option
 												key={info.id}
 												value={info.id}
@@ -402,7 +417,7 @@ const AddSale = () => {
 								border: "1px solid #ccc",
 							}}
 						>
-							<strong>Total: </strong>
+							<strong>Flower Total: </strong>
 							<strong>
 								{totalDiscountPaidDue.total.toFixed(2)} USD
 							</strong>
@@ -450,19 +465,63 @@ const AddSale = () => {
 								alignItems: "center",
 							}}
 						>
+							<strong>Documentation: </strong>
+
+							<Form.Item name="documentation">
+								<InputNumber
+									placeholder="Documentation"
+								/>
+							</Form.Item>
+						</div>
+
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<strong>Freight: </strong>
+
+							<Form.Item name="freight">
+								<InputNumber
+									placeholder="Freight"
+								/>
+							</Form.Item>
+						</div>
+
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
+							<strong>Handling: </strong>
+
+							<Form.Item name="handling">
+								<InputNumber
+									placeholder="Handling"
+								/>
+							</Form.Item>
+						</div>
+
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+								alignItems: "center",
+							}}
+						>
 							<strong>Discount: </strong>
-							<Form.Item
-								name="discount"
-								rules={[
-									{
-										required: true,
-										message: "Please input discount!",
-									},
-								]}
-							>
+							<Form.Item name="discount">
 								<InputNumber
 									type="number"
 									onChange={handleDiscount}
+									placeholder="Discount"
 								/>
 							</Form.Item>
 						</div>
@@ -490,18 +549,11 @@ const AddSale = () => {
 							}}
 						>
 							<strong>Paid Amount: </strong>
-							<Form.Item
-								name="paid_amount"
-								rules={[
-									{
-										required: true,
-										message: "Please input Paid amount!",
-									},
-								]}
-							>
+							<Form.Item name="paid_amount">
 								<InputNumber
 									type="number"
 									onChange={handlePaid}
+									placeholder="Paid"
 								/>
 							</Form.Item>
 						</div>
@@ -516,6 +568,19 @@ const AddSale = () => {
 							<strong>Due Amount: </strong>
 							<strong>
 								{totalDiscountPaidDue.due.toFixed(2)} USD
+							</strong>
+						</div>
+						<div
+							style={{
+								padding: "10px 20px",
+								display: "flex",
+								justifyContent: "space-between",
+								border: "1px solid #ccc",
+							}}
+						>
+							<strong>Grand Total: </strong>
+							<strong>
+								{(totalDiscountPaidDue.due + form.getFieldsValue().documentation + form.getFieldsValue().freight  + form.getFieldsValue().handling ).toFixed(2)} USD
 							</strong>
 						</div>
 

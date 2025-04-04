@@ -10,8 +10,12 @@ const addPurchaseAciton = (data) => {
 };
 
 export const addSale = (values) => {
+  console.log('Adding sale')
+  
   return async (dispatch) => {
     try {
+      console.info('Posting sale')
+      
       const { data } = await axios({
         method: "post",
         headers: {
@@ -38,6 +42,7 @@ export const addSale = (values) => {
       };
     } catch (error) {
       console.log(error.message);
+      
       return {
         message: "error",
       };

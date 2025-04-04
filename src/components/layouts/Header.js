@@ -1,11 +1,9 @@
+import { Button, Col, Dropdown, Menu, Row } from "antd";
+import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
 import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
+
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-
-import { Button, Col, Dropdown, Menu, Row } from "antd";
-
-import { LogoutOutlined, UserOutlined } from "@ant-design/icons";
-
 import { Link } from "react-router-dom";
 import styles from "./Header.module.css";
 
@@ -118,7 +116,7 @@ function Header({ onPress, collapsed, handleCollapsed }) {
 					{isLogged && (
 						<div>
 							<Dropdown
-								overlay={<Menu items={items} />}
+								menu={<Menu items={items} />}
 								placement='bottomLeft'
 								className='user-dropdown'>
 								<Button className='user-btn'>

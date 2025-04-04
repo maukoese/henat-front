@@ -1,21 +1,21 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Badge, Button, Card, Col, Popover, Row, Typography } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Fragment, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+
 import CardComponent from "../Card/card.components";
 import Loader from "../loader/loader";
+import PackingSlip from "../Invoice/PackingSlip";
 import PageTitle from "../page-header/PageHeader";
-
-import { loadSingleSale } from "../../redux/actions/sale/detailSaleAction";
-
-import { deleteSale } from "../../redux/actions/sale/deleteSaleAction";
 import ReturnSaleInvoiceList from "../Card/saleInvoice/ReturnSaleInvoiceList";
+import SaleInvoice from "../Invoice/SaleInvoice";
 import SaleProductListCard from "../Card/saleInvoice/SaleProductListCard";
 import TransactionSaleList from "../Card/saleInvoice/TransactionSaleList";
-import PackingSlip from "../Invoice/PackingSlip";
-import SaleInvoice from "../Invoice/SaleInvoice";
+import { deleteSale } from "../../redux/actions/sale/deleteSaleAction";
+import { loadSingleSale } from "../../redux/actions/sale/detailSaleAction";
+import { toast } from "react-toastify";
+
 //PopUp
 
 const DetailSale = () => {
@@ -24,7 +24,7 @@ const DetailSale = () => {
 
 	//dispatch
 	const dispatch = useDispatch();
-	const sale = useSelector((state) => state.sales.sale);
+	const sale = useSelector(state => state.sales.sale);
 	const {
 		status,
 		totalPaidAmount,
@@ -50,7 +50,7 @@ const DetailSale = () => {
 	// Delete Customer PopUp
 	const [visible, setVisible] = useState(false);
 
-	const handleVisibleChange = (newVisible) => {
+	const handleVisibleChange = newVisible => {
 		setVisible(newVisible);
 	};
 
@@ -140,75 +140,174 @@ const DetailSale = () => {
 													Initital Invoice Info
 												</h5>
 
-												<p>
-													<Typography.Text strong>
-														Total Amount :
-													</Typography.Text>{" "}
-													<strong>
-														{singleSaleInvoice.total_amount.toFixed(
-															2
-														)}
-													</strong>
-												</p>
+												<Row justify="space-between">
+													<Col span={6}>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Flower Amount :
+															</Typography.Text>{" "}
+															<strong>
+																{singleSaleInvoice.total_amount.toFixed(
+																	2
+																)}
+															</strong>
+														</p>
 
-												<p>
-													<Typography.Text strong>
-														Due Amount :
-													</Typography.Text>{" "}
-													<strong
-														style={{ color: "red" }}
-													>
-														{" "}
-														{singleSaleInvoice.due_amount.toFixed(
-															2
-														)}
-													</strong>
-												</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Total Amount :
+															</Typography.Text>{" "}
+															<strong>
+																{(
+																	singleSaleInvoice.total_amount +
+																	parseFloat(
+																		singleSaleInvoice.documentation
+																	) +
+																	parseFloat(
+																		singleSaleInvoice.freight
+																	) +
+																	parseFloat(
+																		singleSaleInvoice.handling
+																	)
+																).toFixed(2)}
+															</strong>
+														</p>
 
-												<p>
-													<Typography.Text strong>
-														Paid Amount :
-													</Typography.Text>{" "}
-													<strong>
-														{singleSaleInvoice.paid_amount.toFixed(
-															2
-														)}
-													</strong>
-												</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Due Amount :
+															</Typography.Text>{" "}
+															<strong
+																style={{
+																	color: "red",
+																}}
+															>
+																{" "}
+																{(
+																	singleSaleInvoice.due_amount +
+																	parseFloat(
+																		singleSaleInvoice.documentation
+																	) +
+																	parseFloat(
+																		singleSaleInvoice.freight
+																	) +
+																	parseFloat(
+																		singleSaleInvoice.handling
+																	)
+																).toFixed(2)}
+															</strong>
+														</p>
 
-												<p>
-													<Typography.Text strong>
-														Discount :
-													</Typography.Text>{" "}
-													<strong>
-														{singleSaleInvoice.discount.toFixed(
-															2
-														)}
-													</strong>
-												</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Paid Amount :
+															</Typography.Text>{" "}
+															<strong>
+																{singleSaleInvoice.paid_amount.toFixed(
+																	2
+																)}
+															</strong>
+														</p>
 
-												<p>
-													<Typography.Text strong>
-														Profit :
-													</Typography.Text>{" "}
-													<strong>
-														{singleSaleInvoice.profit.toFixed(
-															2
-														)}
-													</strong>
-												</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Discount :
+															</Typography.Text>{" "}
+															<strong>
+																{singleSaleInvoice.discount.toFixed(
+																	2
+																)}
+															</strong>
+														</p>
 
-												<p>
-													<Typography.Text strong>
-														Sale Date :
-													</Typography.Text>{" "}
-													<strong>
-														{singleSaleInvoice.created_at.slice(
-															0,
-															10
-														)}
-													</strong>
-												</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Profit :
+															</Typography.Text>{" "}
+															<strong>
+																{singleSaleInvoice.profit.toFixed(
+																	2
+																)}
+															</strong>
+														</p>
+
+														<p>
+															<Typography.Text
+																strong
+															>
+																Sale Date :
+															</Typography.Text>{" "}
+															<strong>
+																{singleSaleInvoice.created_at.slice(
+																	0,
+																	10
+																)}
+															</strong>
+														</p>
+													</Col>
+													<Col span={6}>
+														<p>
+															<Typography.Text
+																strong
+															>
+																HS Code:
+															</Typography.Text>{" "}
+															<strong>
+																{
+																	singleSaleInvoice.hs_code
+																}
+															</strong>
+														</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Documentation:
+															</Typography.Text>{" "}
+															<strong>
+																{
+																	singleSaleInvoice.documentation
+																}
+															</strong>
+														</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Freight:
+															</Typography.Text>{" "}
+															<strong>
+																{
+																	singleSaleInvoice.freight
+																}
+															</strong>
+														</p>
+														<p>
+															<Typography.Text
+																strong
+															>
+																Handling:
+															</Typography.Text>{" "}
+															<strong>
+																{
+																	singleSaleInvoice.handling
+																}
+															</strong>
+														</p>
+													</Col>
+												</Row>
 
 												<div>
 													<h5 className="text-center mt-2 mb-2">
@@ -246,9 +345,19 @@ const DetailSale = () => {
 																color: "red",
 															}}
 														>
-															{dueAmount.toFixed(
-																2
-															)}
+															{(
+																singleSaleInvoice.total_amount +
+																parseFloat(
+																	singleSaleInvoice.documentation
+																) +
+																parseFloat(
+																	singleSaleInvoice.freight
+																) +
+																parseFloat(
+																	singleSaleInvoice.handling
+																) -
+																totalPaidAmount
+															).toFixed(2)}
 														</strong>
 													</p>
 												</div>
